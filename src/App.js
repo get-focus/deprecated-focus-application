@@ -4,6 +4,7 @@ import './App.css';
 import Layout from './layout';
 import fetch from './fetch'
 import reducer from './fetch/reducer';
+import LoadingBarComponent from './fetch/component';
 class App extends Component {
   componentWillMount(){
     fetch('http://localhost:3000/sockjs-nodesss/info?t=1472751685367')
@@ -11,7 +12,9 @@ class App extends Component {
     .catch(e => console.log('e', e));
   }
   render() {
-    return <Layout ></Layout>
+    return <Layout >
+      <LoadingBarComponent pending={5} total={10} />
+    </Layout>
     ;
   }
 }
