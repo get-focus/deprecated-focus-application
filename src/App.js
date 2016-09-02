@@ -6,7 +6,7 @@ import reducer, {totalsSelector} from './fetch/reducer';
 import LoadingBarComponent from './fetch/component';
 import {createStore} from 'redux';
 import {Provider, connect} from 'react-redux';
-import createfocusFetchProxy from './fetch';
+import createfocusFetchProxy from './fetch/fetch-proxy';
 const store = createStore(reducer);
 const ConnectedLoadingBar = connect(totalsSelector)(LoadingBarComponent);
 const fetch = createfocusFetchProxy(store.dispatch);
