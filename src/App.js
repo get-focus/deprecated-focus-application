@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Layout from './layout';
@@ -9,14 +9,22 @@ import {Provider, connect} from 'react-redux';
 import createfocusFetchProxy from './fetch/fetch-proxy';
 let msgId = 0;
 import messageReducer from './messages/reducer';
+import {removeMessage} from './messages/action';
 const store = createStore(combineReducers({fetch: fetchReducer, messages: messageReducer}));
 const ConnectedLoadingBar = connect(s => totalsSelector(s.fetch))(LoadingBarComponent);
 const fetch = createfocusFetchProxy(store.dispatch);
 import MessageCenter from './messages/message-center';
+import './messages/message-center.css';
 import './messages/reducer';
-const ConnectedMessageCenter = connect(s => ({messages: s.messages}), d => ({deleteMessage: log}))(MessageCenter)
+
+const ConnectedMessageCenter = connect(
+  s => ({messages: s.messages}),
+  d => ({deleteMessage: id => d(removeMessage(id))})
+)(MessageCenter);
+
 const log = d => console.log({logger: d})
-class App extends Component {
+
+class App extends PureComponent {
   componentWillMount(){
     fetch('http://localhost:8888/err')
       .then(log)
@@ -29,11 +37,12 @@ class App extends Component {
       .catch(log);
   }
   render() {
-    return <Provider store={store}><Layout >
-    <button onClick={() => store.dispatch({type: 'PUSH_MESSAGE', message:{id: `msg_${msgId++}`, type: 'info'}})}>Push</button>
-      <ConnectedLoadingBar/>
-      <ConnectedMessageCenter/>
-    </Layout></Provider>
+    return <Provider store={store}>
+      <Layout MessageCenter={ConnectedMessageCenter}>
+        <button onClick={() => store.dispatch({type: 'PUSH_MESSAGE', message:{id: `msg_${msgId++}`, type: 'info'}})}>Push</button>
+        <ConnectedLoadingBar/>
+      </Layout>
+    </Provider>
     ;
   }
 }
