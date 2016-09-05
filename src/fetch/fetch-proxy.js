@@ -26,7 +26,11 @@ function focusFetchProxy(...fetchArguments) {
     updateRequestStatus(requestStatus, 'pending');
     return fetch(...fetchArguments)
       .then(response => {
-        response.ok ? updateRequestStatus(requestStatus, 'success') :  updateRequestStatus(requestStatus, 'error');
+        if(response.ok){
+          updateRequestStatus(requestStatus, 'success')
+        } else {
+          updateRequestStatus(requestStatus, 'error')
+        }
         return response;
       }).catch(error => {
         updateRequestStatus(requestStatus, 'error');
@@ -39,10 +43,10 @@ function createfocusFetchProxy(projectDispatcher){
   return focusFetchProxy;
 }
 
-function isPromise(val) {
-  return val && typeof val.then === 'function';
-}
 /*
+function isPromise(val) {
+return val && typeof val.then === 'function';
+}
 export function focusFetchMiddleware({ dispatch }){
   return next => action => {
 

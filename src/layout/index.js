@@ -1,4 +1,12 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PureComponent, PropTypes} from 'react';
+
+class ScrollTrigger extends PureComponent {
+  render(){
+    const {children, onTriggerUp, onTriggerDown} = this.props;
+    return <div>{children}</div>
+  }
+}
+
 const fakeComponentCreator = name => function(props){return <pre><h2>{name}</h2><code>{JSON.stringify(props, null, 4)}</code></pre>}
 function Layout({
   AppHeader,

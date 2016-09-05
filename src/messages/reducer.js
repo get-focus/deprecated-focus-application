@@ -6,11 +6,10 @@ function messageCenterReducer(state = [], action){
       //console.log('mesgId', action.message.id, [...state, action.message])
       return [...state, action.message];
     case REMOVE_MESSAGE:
-      const msgIndex = state.findIndex(m => m.id = action.message.id);
+      const msgIndex = state.findIndex(m => m.id === action.message.id);
       if(msgIndex === (-1)) return state;
       //console.log('msgIndex', msgIndex, ...state.slice(0, msgIndex), ...state.slice(msgIndex + 1))
       return [...state.slice(0, msgIndex), ...state.slice(msgIndex+1)];
-      break;
     default:
       return state;
   }
