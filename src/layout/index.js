@@ -1,11 +1,5 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, { PropTypes} from 'react';
 
-class ScrollTrigger extends PureComponent {
-  render(){
-    const {children, onTriggerUp, onTriggerDown} = this.props;
-    return <div>{children}</div>
-  }
-}
 
 const fakeComponentCreator = name => function(props){return <pre><h2>{name}</h2><code>{JSON.stringify(props, null, 4)}</code></pre>}
 function Layout({
@@ -24,12 +18,17 @@ function Layout({
   ...otherProps
 }){
   return  <div data-focus='layout' data-menu={'left'} {...otherProps}>
-            <LoadingBar />
+            {
+                LoadingBar && <LoadingBar />
+
+            }
             <MessageCenter />
             {ErrorCenter &&
                 <ErrorCenter />
             }
-            <ConfirmWrapper />
+            {
+                ConfirmWrapper && <ConfirmWrapper />
+            }
             <AppHeader />
             {Menu &&
                 <Menu />
@@ -50,11 +49,11 @@ function Layout({
 
 Layout.defaultProps = {
     AppHeader: fakeComponentCreator('AppHeader'), //default app header.
-    ErrorCenter: fakeComponentCreator('ErrorCenter'), // default error center
-    LoadingBar: fakeComponentCreator('LoadingBar'), // default loading bar
-    LoadingStatusBar: fakeComponentCreator('LoadingStatusBar'),
+    // ErrorCenter: fakeComponentCreator('ErrorCenter'), // default error center
+  //  LoadingBar: fakeComponentCreator('LoadingBar'), // default loading bar
+  //  LoadingStatusBar: fakeComponentCreator('LoadingStatusBar'),
     MessageCenter: fakeComponentCreator('MessageCenter'), // default message center
-    ConfirmWrapper: fakeComponentCreator('ConfirmWrapper') // default confirm wrapper,
+    //ConfirmWrapper: fakeComponentCreator('ConfirmWrapper') // default confirm wrapper,
 };
 
 Layout.PropTypes = {
