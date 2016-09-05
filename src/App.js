@@ -12,6 +12,8 @@ import {removeMessage} from './messages/action';
 import MessageCenter from './messages/message-center';
 import './messages/message-center.css';
 import './messages/reducer';
+import AppHeader from './header/header-component';
+
 const store = createStore(combineReducers({fetch: fetchReducer, messages: messageReducer}));
 const ConnectedLoadingBar = connect(s => totalsSelector(s.fetch))(LoadingBarComponent);
 const fetch = createfocusFetchProxy(store.dispatch);
@@ -38,7 +40,7 @@ class App extends PureComponent {
   }
   render() {
     return <Provider store={store}>
-      <Layout MessageCenter={ConnectedMessageCenter}>
+      <Layout AppHeader={AppHeader} MessageCenter={ConnectedMessageCenter}>
         <button onClick={() => store.dispatch({type: 'PUSH_MESSAGE', message:{id: `msg_${msgId++}`, type: 'info'}})}>Push</button>
         <ConnectedLoadingBar/>
       </Layout>
