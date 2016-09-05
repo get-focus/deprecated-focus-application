@@ -15,18 +15,18 @@ const fetch = createfocusFetchProxy(store.dispatch);
 import MessageCenter from './messages/message-center';
 import './messages/reducer';
 const ConnectedMessageCenter = connect(s => ({messages: s.messages}), d => ({deleteMessage: log}))(MessageCenter)
-const log = d => d
+const log = d => console.log({logger: d})
 class App extends Component {
   componentWillMount(){
     fetch('http://localhost:8888/err')
-    .then(log)
-    .catch(log);
+      .then(log)
+      .catch(log);
     fetch('http://localhost:8888/wait')
-    .then(log)
-    .catch(log);
+      .then(log)
+      .catch(log);
     fetch('http://localhost:8888/ok')
-    .then(log)
-    .catch(log);
+      .then(log)
+      .catch(log);
   }
   render() {
     return <Provider store={store}><Layout >
