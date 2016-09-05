@@ -23,7 +23,6 @@ function fetchReducer(state = {requests: {}, totals: {}}, action = {}){
         },
         DEFAULT_TOTALS);
         return {requests: newRequests, totals: newTotals};
-      break;
     default:
       return state;
   }

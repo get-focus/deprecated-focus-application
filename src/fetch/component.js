@@ -14,6 +14,9 @@ LoadingBarComponent.defaultProps = {
   ProgressBar: ProgressBar
 }
 
+LoadingBarComponent.propTypes = {
+  ProgressBar: PropTypes.func
+}
 
 
 export default LoadingBarComponent;
