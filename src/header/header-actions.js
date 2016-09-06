@@ -6,28 +6,28 @@ export const INJECT_BAR_CONTENT_SUMMARY_HEADER = 'Header: INJECT_BAR_CONTENT_SUM
 export const INJECT_BAR_CONTENT_RIGHT_HEADER = 'Header: INJECT_BAR_CONTENT_RIGHT_HEADER';
 export const INJECT_BAR_CONTENT_EXPANDED_HEADER = 'Header: INJECT_BAR_CONTENT_EXPANDED_HEADER';
 export const DEFAULT_TRIGGER_POSITION = 60;
-export function expandHeader(){
+export function expandHeader() {
   return {type: EXPAND_HEADER};
 }
-export function unExpandHeader(){
+export function unExpandHeader() {
   return {type: UNEXPAND_HEADER};
 }
-export function triggerPosition(value = DEFAULT_TRIGGER_POSITION){
+export function triggerPosition(value = DEFAULT_TRIGGER_POSITION) {
   return {type: TRIGGER_POSITION_HEADER, value};
 }
 
-export function injectBarContentLeftHeader(Component){
+export function injectBarContentLeftHeader(Component) {
   return {type: INJECT_BAR_CONTENT_LEFT_HEADER, Component};
 }
 
-export function injectBarContentRightHeader(Component){
+export function injectBarContentRightHeader(Component) {
   return {type: INJECT_BAR_CONTENT_RIGHT_HEADER, Component};
 }
 
-export function injectBarContentSummaryHeader(Component){
+export function injectBarContentSummaryHeader(Component) {
   return {type: INJECT_BAR_CONTENT_SUMMARY_HEADER, Component};
 }
 
-export function injectBarContentExpandedHeader(Component){
+export function injectBarContentExpandedHeader(Component) {
   return {type: INJECT_BAR_CONTENT_EXPANDED_HEADER, Component};
 }

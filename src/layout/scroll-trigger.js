@@ -1,6 +1,6 @@
 import React, {PureComponent, PropTypes} from 'react'
 import isUndefined from 'lodash/isUndefined'
-function _getScrollPosition(domNode){
+function _getScrollPosition(domNode) {
   const y = window.pageYOffset || document.documentElement.scrollTop;
   const x = window.pageXOffset || document.documentElement.scrollLeft;
   if(isUndefined(domNode)) {
