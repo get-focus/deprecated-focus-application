@@ -24,7 +24,7 @@ import {
   injectBarContentExpandedHeader,
   triggerPosition
 } from './header/header-actions'
-
+import {Provider as RoleProvider, Role} from './role';
 const ConnectedHeader = connect(headerSelector)(AppHeader)
 const store = createStore(combineReducers({fetch: fetchReducer, messages: messageReducer, header: headerReducer}));
 const ConnectedLoadingBar = connect(s => totalsSelector(s.fetch))(LoadingBarComponent);
@@ -72,6 +72,13 @@ class App extends PureComponent {
       clearTrigger: () => dispatch(triggerPosition())
     }
     return <Provider store={store}>
+
+      <RoleProvider roles={['PAPA', 'SINGE']}>
+<div>
+        <Role hasOne={['PAPA']}><div>{'Got it'}</div></Role>
+        <Role hasOne={['PAS_PAPA']}><div>{'Pas Got it'}</div></Role>
+        <Role hasAll={['PAPA', 'SINGE']}><div>{'Got it'}</div></Role>
+        <Role hasAll={['PAPA', 'SINGE', 'PAS_PAPA']}><div>{'Pas Got it'}</div></Role>
       <ConnectedScrollTrigger>
         <Layout AppHeader={ConnectedHeader} MessageCenter={ConnectedMessageCenter}>
           <div style={{display: 'flex', justifyContent:'space-around'}}>
@@ -93,6 +100,8 @@ class App extends PureComponent {
         </Layout>
         <Debug />
       </ConnectedScrollTrigger>
+      </div>
+      </RoleProvider>
     </Provider>
     ;
   }
