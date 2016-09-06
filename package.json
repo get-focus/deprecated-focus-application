@@ -4,7 +4,8 @@
   "private": true,
   "devDependencies": {
     "isomorphic-fetch": "^2.2.1",
-    "react-scripts": "0.2.3"
+    "react-scripts": "0.2.3",
+    "redux-thunk": "^2.1.0"
   },
   "dependencies": {
     "material-design-lite": "^1.2.0",

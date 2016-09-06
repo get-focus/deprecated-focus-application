@@ -4,7 +4,8 @@ import './App.css';
 import Layout from './layout';
 import fetchReducer, {totalsSelector} from './fetch/reducer';
 import LoadingBarComponent from './fetch/component';
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 import ScrollTrigger from './layout/scroll-trigger';
 import {Provider, connect} from 'react-redux';
 import createfocusFetchProxy from './fetch/fetch-proxy';
@@ -25,8 +26,16 @@ import {
   triggerPosition
 } from './header/header-actions'
 import {Provider as RoleProvider, Role} from './role';
+import {confirm} from './confirm/confirm-actions';
+import confirmReducer from './confirm/confirm-reducer';
 const ConnectedHeader = connect(headerSelector)(AppHeader)
-const store = createStore(combineReducers({fetch: fetchReducer, messages: messageReducer, header: headerReducer}));
+const store = createStore(
+  combineReducers({
+    fetch: fetchReducer,
+    messages: messageReducer,
+    header: headerReducer,
+    confirm: confirmReducer
+  }), applyMiddleware(thunk));
 const ConnectedLoadingBar = connect(s => totalsSelector(s.fetch))(LoadingBarComponent);
 const fetch = createfocusFetchProxy(store.dispatch);
 let msgId = 0;
@@ -49,6 +58,10 @@ const Debug = connect(s => ({redux: s}))(props => <pre><code>{JSON.stringify(pro
 
 class App extends PureComponent {
   componentWillMount(){
+    store.dispatch(confirm('Hello', {
+      resolve: () => console.log('ok'),
+      reject: () => console.log('ko')
+    }))
     fetch('http://localhost:8888/err')
       .then(log)
       .catch(log);
