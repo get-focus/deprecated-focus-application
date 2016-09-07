@@ -27,7 +27,10 @@ import {
 } from './header/header-actions'
 import {Provider as RoleProvider, Role} from './role';
 import {confirm} from './confirm/confirm-actions';
-import confirmReducer from './confirm/confirm-reducer';
+import ConfirmWrapper from './confirm/confirm-wrapper'
+import confirmReducer, {confirmSelector} from './confirm/confirm-reducer';
+const ConnectedConfirmWrapper = connect(confirmSelector)(ConfirmWrapper);
+
 const ConnectedHeader = connect(headerSelector)(AppHeader)
 const store = createStore(
   combineReducers({
@@ -58,9 +61,10 @@ const Debug = connect(s => ({redux: s}))(props => <pre><code>{JSON.stringify(pro
 
 class App extends PureComponent {
   componentWillMount(){
-    store.dispatch(confirm('Hello', {
-      resolve: () => console.log('ok'),
-      reject: () => console.log('ko')
+
+    store.dispatch(confirm('Pierre <3', {
+      resolve: (d) => console.log('ok'),
+      reject: (err) => console.log('ko')
     }))
     fetch('http://localhost:8888/err')
       .then(log)
@@ -93,7 +97,7 @@ class App extends PureComponent {
         <Role hasAll={['PAPA', 'SINGE']}><div>{'Got it'}</div></Role>
         <Role hasAll={['PAPA', 'SINGE', 'PAS_PAPA']}><div>{'Pas Got it'}</div></Role>
       <ConnectedScrollTrigger>
-        <Layout AppHeader={ConnectedHeader} MessageCenter={ConnectedMessageCenter}>
+        <Layout AppHeader={ConnectedHeader} MessageCenter={ConnectedMessageCenter} ConfirmWrapper={ConnectedConfirmWrapper}>
           <div style={{display: 'flex', justifyContent:'space-around'}}>
             <button onClick={() => dispatch({type: 'PUSH_MESSAGE', message:{id: `msg_${msgId++}`, type: 'info'}})}>Push</button>
             <button onClick={actions.expandHeader}>expandHeader</button>
