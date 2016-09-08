@@ -5,12 +5,16 @@ import headerReducer from './header/header-reducer';
 import confirmReducer from './confirm/confirm-reducer';
 import fetchReducer from './fetch/fetch-reducer';
 
+export function getApplicationReducer(){
+  return combineReducers({
+    fetch: fetchReducer,
+    messages: messageReducer,
+    header: headerReducer,
+    confirm: confirmReducer
+  });
+}
+
 export default function create(){
   return createStore(
-    combineReducers({
-      fetch: fetchReducer,
-      messages: messageReducer,
-      header: headerReducer,
-      confirm: confirmReducer
-    }), applyMiddleware(thunk));
+    getApplicationReducer(), applyMiddleware(thunk));
 }
