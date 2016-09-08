@@ -2,20 +2,16 @@ import React, { PureComponent } from 'react';
 //import logo from './logo.svg';
 import './App.css';
 import Layout from './layout';
-import fetchReducer from './fetch/fetch-reducer';
 import LoadingBar from './fetch';
-import {createStore, combineReducers, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
 import ScrollTrigger from './layout/scroll-trigger';
 import {Provider, connect} from 'react-redux';
 import createfocusFetchProxy from './fetch/fetch-proxy';
-import messageReducer from './messages/messages-reducer';
 import MessageCenter from './messages';
 import './messages/message-center.css';
 
 import AppHeader from './header';
 
-import headerReducer, { headerIsExpandedSelector} from './header/header-reducer';
+import { headerIsExpandedSelector} from './header/header-reducer';
 import {
   expandHeader,
   unExpandHeader,
@@ -28,19 +24,14 @@ import {
 import {Provider as RoleProvider, Role} from './role';
 //
 import {confirm} from './confirm/confirm-actions';
-import confirmReducer from './confirm/confirm-reducer';
+
 import ConfirmWrapper from './confirm'
+import createAppStore from './store';
 
-const store = createStore(
-  combineReducers({
-    fetch: fetchReducer,
-    messages: messageReducer,
-    header: headerReducer,
-    confirm: confirmReducer
-  }), applyMiddleware(thunk));
+const store = createAppStore();
 const fetch = createfocusFetchProxy(store.dispatch);
-let msgId = 0;
 
+let msgId = 0;
 
 
 const log = d => console.log({logger: d})
