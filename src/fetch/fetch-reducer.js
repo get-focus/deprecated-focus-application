@@ -1,10 +1,13 @@
-import {UPDATE_REQUEST} from './action';
+import {UPDATE_REQUEST} from './fetch-actions';
 const DEFAULT_TOTALS = {pending: 0,cancelled: 0, success:0, error: 0, total:0};
 
-export function totalsSelector(state){
-  return state && state.totals;
+export function totalsFetchSelector(state){
+  return state && fetchSelector(state).totals;
 }
 
+export function fetchSelector(state){
+  return  state && state.fetch
+}
 
 function fetchReducer(state = {requests: {}, totals: {}}, action = {}){
   switch (action.type) {

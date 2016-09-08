@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 //import logo from './logo.svg';
 import './App.css';
 import Layout from './layout';
-import fetchReducer, {totalsSelector} from './fetch/reducer';
-import LoadingBarComponent from './fetch/component';
+import fetchReducer from './fetch/fetch-reducer';
+import LoadingBar from './fetch';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import ScrollTrigger from './layout/scroll-trigger';
@@ -14,7 +14,9 @@ import {removeMessage} from './messages/action';
 import MessageCenter from './messages/message-center';
 import './messages/message-center.css';
 import './messages/reducer';
+
 import AppHeader from './header';
+
 import headerReducer, { headerIsExpandedSelector} from './header/header-reducer';
 import {
   expandHeader,
@@ -38,7 +40,6 @@ const store = createStore(
     header: headerReducer,
     confirm: confirmReducer
   }), applyMiddleware(thunk));
-const ConnectedLoadingBar = connect(s => totalsSelector(s.fetch))(LoadingBarComponent);
 const fetch = createfocusFetchProxy(store.dispatch);
 let msgId = 0;
 
@@ -112,7 +113,7 @@ class App extends PureComponent {
           <div style={{display: 'flex', justifyContent:'center', alignItems: 'center', height: 300, width:'100%'}}>Hello</div>
           <div style={{display: 'flex', justifyContent:'center', alignItems: 'center', height: 300, width:'100%'}}>Hello</div>
           <div style={{display: 'flex', justifyContent:'center', alignItems: 'center', height: 300, width:'100%'}}>Hello</div>
-          <ConnectedLoadingBar/>
+          <LoadingBar/>
         </Layout>
         <Debug />
       </ConnectedScrollTrigger>
