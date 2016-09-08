@@ -1,4 +1,8 @@
-import {PUSH_MESSAGE, REMOVE_MESSAGE} from './action';
+import {PUSH_MESSAGE, REMOVE_MESSAGE} from './messages-actions';
+
+export function messagesSelector(state){
+  return {messages: state.messages};
+}
 
 function messageCenterReducer(state = [], action){
   switch (action.type) {

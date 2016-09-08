@@ -9,11 +9,9 @@ import thunk from 'redux-thunk';
 import ScrollTrigger from './layout/scroll-trigger';
 import {Provider, connect} from 'react-redux';
 import createfocusFetchProxy from './fetch/fetch-proxy';
-import messageReducer from './messages/reducer';
-import {removeMessage} from './messages/action';
-import MessageCenter from './messages/message-center';
+import messageReducer from './messages/messages-reducer';
+import MessageCenter from './messages';
 import './messages/message-center.css';
-import './messages/reducer';
 
 import AppHeader from './header';
 
@@ -43,10 +41,7 @@ const store = createStore(
 const fetch = createfocusFetchProxy(store.dispatch);
 let msgId = 0;
 
-const ConnectedMessageCenter = connect(
-  s => ({messages: s.messages}),
-  d => ({deleteMessage: id => d(removeMessage(id))})
-)(MessageCenter);
+
 
 const log = d => console.log({logger: d})
 const ConnectedScrollTrigger = connect(
@@ -96,7 +91,7 @@ class App extends PureComponent {
         <Role hasAll={['PAPA', 'SINGE']}><div>{'Got it'}</div></Role>
         <Role hasAll={['PAPA', 'SINGE', 'PAS_PAPA']}><div>{'Pas Got it'}</div></Role>
       <ConnectedScrollTrigger>
-        <Layout AppHeader={AppHeader} MessageCenter={ConnectedMessageCenter} ConfirmWrapper={ConfirmWrapper}>
+        <Layout AppHeader={AppHeader} MessageCenter={MessageCenter} ConfirmWrapper={ConfirmWrapper}>
           <div style={{display: 'flex', justifyContent:'space-around'}}>
             <button onClick={() => dispatch({type: 'PUSH_MESSAGE', message:{id: `msg_${msgId++}`, type: 'info'}})}>Push</button>
             <button onClick={actions.expandHeader}>expandHeader</button>
