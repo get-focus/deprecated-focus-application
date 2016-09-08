@@ -4,9 +4,9 @@ import isString from 'lodash/isString';
 function ConfirmWrapper({
   isVisible,
   ConfirmationModal,
-  ConfirmContentComponent,
-  cancelHandler,
-  confirmHandler,
+  Content: ConfirmContentComponent,
+  handleCancel: cancelHandler,
+  handleConfirm: confirmHandler,
   ...contentProps
 }){
   const ConfirmContent = isString(ConfirmContentComponent) ? (() => <span>{ConfirmContentComponent}</span>) : ConfirmContentComponent;
@@ -23,11 +23,14 @@ ConfirmWrapper.propTypes = {
 
 ConfirmWrapper.defaultProps = {
   isVisible: false,
-  ConfirmationModal: props => <div>
-    <h1>{'Great Modal'}</h1>
+  ConfirmationModal: props => <div style={{border: 'dashed tomato 3px', textAlign: 'center'}}>
+    <h3>{'Default Modal'}</h3>
+    <p style={{backgroundColor: 'tomato', color: 'white'}}>{`Even if this modal is really wonderfull, it may be a better idea to provide a ModalComponent of your own design or focus-components/confirm to this <ConfirmWrapper> component.`}</p>
     {props.children}
-    <button onClick={props.cancelHandler}>{'Cancel'}</button>
-    <button onClick={props.confirmHandler}>{'OK'}</button>
+    <p>
+      <button onClick={props.cancelHandler}>{'Cancel'}</button>
+      <button onClick={props.confirmHandler}>{'OK'}</button>
+    </p>
   </div>
 };
 
