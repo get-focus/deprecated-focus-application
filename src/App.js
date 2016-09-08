@@ -57,8 +57,7 @@ const ConnectedScrollTrigger = connect(
   }))(ScrollTrigger);
 
 
-const Debug = connect(s => ({redux: s}))(props => <pre><code>{JSON.stringify(props.redux, null, 4)}</code></pre>)
-
+import Debug from './debug'
 class App extends PureComponent {
   componentDidMount(){
 
