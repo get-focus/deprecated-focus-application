@@ -60,11 +60,11 @@ const ConnectedScrollTrigger = connect(
 const Debug = connect(s => ({redux: s}))(props => <pre><code>{JSON.stringify(props.redux, null, 4)}</code></pre>)
 
 class App extends PureComponent {
-  componentWillMount(){
+  componentDidMount(){
 
-    store.dispatch(confirm('Pierre <3', {
-      resolve: (d) => console.log('ok'),
-      reject: (err) => console.log('ko')
+    store.dispatch(confirm('Amelie :pikax: Thomas', {
+      resolve: d => console.log('ok', d),
+      reject: err =>console.log('ko', err)
     }))
     fetch('http://localhost:8888/err')
       .then(log)
