@@ -4,7 +4,8 @@ import './App.css';
 import Layout from './layout';
 import fetchReducer, {totalsSelector} from './fetch/reducer';
 import LoadingBarComponent from './fetch/component';
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 import ScrollTrigger from './layout/scroll-trigger';
 import {Provider, connect} from 'react-redux';
 import createfocusFetchProxy from './fetch/fetch-proxy';
@@ -25,8 +26,19 @@ import {
   triggerPosition
 } from './header/header-actions'
 import {Provider as RoleProvider, Role} from './role';
+import {confirm} from './confirm/confirm-actions';
+import ConfirmWrapper from './confirm/confirm-wrapper'
+import confirmReducer, {confirmSelector} from './confirm/confirm-reducer';
+const ConnectedConfirmWrapper = connect(confirmSelector)(ConfirmWrapper);
+
 const ConnectedHeader = connect(headerSelector)(AppHeader)
-const store = createStore(combineReducers({fetch: fetchReducer, messages: messageReducer, header: headerReducer}));
+const store = createStore(
+  combineReducers({
+    fetch: fetchReducer,
+    messages: messageReducer,
+    header: headerReducer,
+    confirm: confirmReducer
+  }), applyMiddleware(thunk));
 const ConnectedLoadingBar = connect(s => totalsSelector(s.fetch))(LoadingBarComponent);
 const fetch = createfocusFetchProxy(store.dispatch);
 let msgId = 0;
@@ -48,7 +60,12 @@ const ConnectedScrollTrigger = connect(
 const Debug = connect(s => ({redux: s}))(props => <pre><code>{JSON.stringify(props.redux, null, 4)}</code></pre>)
 
 class App extends PureComponent {
-  componentWillMount(){
+  componentDidMount(){
+
+    store.dispatch(confirm('Amelie :pikax: Thomas', {
+      resolve: d => console.log('ok', d),
+      reject: err =>console.log('ko', err)
+    }))
     fetch('http://localhost:8888/err')
       .then(log)
       .catch(log);
@@ -80,7 +97,7 @@ class App extends PureComponent {
         <Role hasAll={['PAPA', 'SINGE']}><div>{'Got it'}</div></Role>
         <Role hasAll={['PAPA', 'SINGE', 'PAS_PAPA']}><div>{'Pas Got it'}</div></Role>
       <ConnectedScrollTrigger>
-        <Layout AppHeader={ConnectedHeader} MessageCenter={ConnectedMessageCenter}>
+        <Layout AppHeader={ConnectedHeader} MessageCenter={ConnectedMessageCenter} ConfirmWrapper={ConnectedConfirmWrapper}>
           <div style={{display: 'flex', justifyContent:'space-around'}}>
             <button onClick={() => dispatch({type: 'PUSH_MESSAGE', message:{id: `msg_${msgId++}`, type: 'info'}})}>Push</button>
             <button onClick={actions.expandHeader}>expandHeader</button>

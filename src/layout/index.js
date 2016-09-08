@@ -53,7 +53,7 @@ Layout.defaultProps = {
   //  LoadingBar: fakeComponentCreator('LoadingBar'), // default loading bar
   //  LoadingStatusBar: fakeComponentCreator('LoadingStatusBar'),
     MessageCenter: fakeComponentCreator('MessageCenter'), // default message center
-    //ConfirmWrapper: fakeComponentCreator('ConfirmWrapper') // default confirm wrapper,
+    ConfirmWrapper: fakeComponentCreator('ConfirmWrapper') // default confirm wrapper,
 };
 
 Layout.PropTypes = {
