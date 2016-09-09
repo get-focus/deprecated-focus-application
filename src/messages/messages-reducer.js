@@ -4,6 +4,10 @@ export function messagesSelector(state){
   return {messages: state.messages};
 }
 
+export function messageToDisplaySelector(state){
+  return {messages: state.messages.length > 0 ? state.messages.slice(0,1) : []};
+}
+
 function messageCenterReducer(state = [], action){
   switch (action.type) {
     case PUSH_MESSAGE:
