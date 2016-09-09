@@ -2,20 +2,16 @@ import React, { PureComponent } from 'react';
 //import logo from './logo.svg';
 import './App.css';
 import Layout from './layout';
-import fetchReducer, {totalsSelector} from './fetch/reducer';
-import LoadingBarComponent from './fetch/component';
-import {createStore, combineReducers, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
+import LoadingBar from './fetch';
 import ScrollTrigger from './layout/scroll-trigger';
 import {Provider, connect} from 'react-redux';
 import createfocusFetchProxy from './fetch/fetch-proxy';
-import messageReducer from './messages/reducer';
-import {removeMessage} from './messages/action';
-import MessageCenter from './messages/message-center';
+import MessageCenter from './messages';
 import './messages/message-center.css';
-import './messages/reducer';
-import AppHeader from './header/header-component';
-import headerReducer, {headerSelector, headerIsExpandedSelector} from './header/header-reducer';
+
+import AppHeader from './header';
+
+import { headerIsExpandedSelector} from './header/header-reducer';
 import {
   expandHeader,
   unExpandHeader,
@@ -26,27 +22,17 @@ import {
   triggerPosition
 } from './header/header-actions'
 import {Provider as RoleProvider, Role} from './role';
+//
 import {confirm} from './confirm/confirm-actions';
-import ConfirmWrapper from './confirm/confirm-wrapper'
-import confirmReducer, {confirmSelector} from './confirm/confirm-reducer';
-const ConnectedConfirmWrapper = connect(confirmSelector)(ConfirmWrapper);
 
-const ConnectedHeader = connect(headerSelector)(AppHeader)
-const store = createStore(
-  combineReducers({
-    fetch: fetchReducer,
-    messages: messageReducer,
-    header: headerReducer,
-    confirm: confirmReducer
-  }), applyMiddleware(thunk));
-const ConnectedLoadingBar = connect(s => totalsSelector(s.fetch))(LoadingBarComponent);
+import ConfirmWrapper from './confirm'
+import createAppStore from './store';
+
+const store = createAppStore();
 const fetch = createfocusFetchProxy(store.dispatch);
+
 let msgId = 0;
 
-const ConnectedMessageCenter = connect(
-  s => ({messages: s.messages}),
-  d => ({deleteMessage: id => d(removeMessage(id))})
-)(MessageCenter);
 
 const log = d => console.log({logger: d})
 const ConnectedScrollTrigger = connect(
@@ -57,8 +43,7 @@ const ConnectedScrollTrigger = connect(
   }))(ScrollTrigger);
 
 
-const Debug = connect(s => ({redux: s}))(props => <pre><code>{JSON.stringify(props.redux, null, 4)}</code></pre>)
-
+import Debug from './debug'
 class App extends PureComponent {
   componentDidMount(){
 
@@ -97,7 +82,7 @@ class App extends PureComponent {
         <Role hasAll={['PAPA', 'SINGE']}><div>{'Got it'}</div></Role>
         <Role hasAll={['PAPA', 'SINGE', 'PAS_PAPA']}><div>{'Pas Got it'}</div></Role>
       <ConnectedScrollTrigger>
-        <Layout AppHeader={ConnectedHeader} MessageCenter={ConnectedMessageCenter} ConfirmWrapper={ConnectedConfirmWrapper}>
+        <Layout AppHeader={AppHeader} MessageCenter={MessageCenter} ConfirmWrapper={ConfirmWrapper}>
           <div style={{display: 'flex', justifyContent:'space-around'}}>
             <button onClick={() => dispatch({type: 'PUSH_MESSAGE', message:{id: `msg_${msgId++}`, type: 'info'}})}>Push</button>
             <button onClick={actions.expandHeader}>expandHeader</button>
@@ -113,7 +98,7 @@ class App extends PureComponent {
           <div style={{display: 'flex', justifyContent:'center', alignItems: 'center', height: 300, width:'100%'}}>Hello</div>
           <div style={{display: 'flex', justifyContent:'center', alignItems: 'center', height: 300, width:'100%'}}>Hello</div>
           <div style={{display: 'flex', justifyContent:'center', alignItems: 'center', height: 300, width:'100%'}}>Hello</div>
-          <ConnectedLoadingBar/>
+          <LoadingBar/>
         </Layout>
         <Debug />
       </ConnectedScrollTrigger>
