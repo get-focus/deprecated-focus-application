@@ -31,7 +31,7 @@ function HeaderComponent({
   actions
 }){
     return (<header data-focus='header-bar' style={isExpanded ? undefined : fixedStyle}>
-        <nav data-focus='bar' style={{display: 'flex', justifyContent: 'space-around'}}>
+        <nav data-focus='bar' style={{display: 'flex', justifyContent: 'space-between'}}>
           <BarContentLeft />
           {!isExpanded && <BarContentSummary />}
           <BarContentRight/>

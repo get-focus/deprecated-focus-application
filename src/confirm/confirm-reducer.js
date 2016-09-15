@@ -1,7 +1,6 @@
 import {CLEAR_CONFIG_CONFIRM, SET_CONFIG_CONFIRM} from './confirm-actions';
 
 export function confirmSelector(state){
-  console.log('confirmSelector', state.confirm)
   return state.confirm;
 }
 
