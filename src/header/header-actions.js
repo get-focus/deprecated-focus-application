@@ -5,6 +5,7 @@ export const INJECT_BAR_CONTENT_LEFT_HEADER = 'Header: INJECT_BAR_CONTENT_LEFT_H
 export const INJECT_BAR_CONTENT_SUMMARY_HEADER = 'Header: INJECT_BAR_CONTENT_SUMMARY_HEADER';
 export const INJECT_BAR_CONTENT_RIGHT_HEADER = 'Header: INJECT_BAR_CONTENT_RIGHT_HEADER';
 export const INJECT_BAR_CONTENT_EXPANDED_HEADER = 'Header: INJECT_BAR_CONTENT_EXPANDED_HEADER';
+export const INJECT_ACTIONS_HEADER = 'Header: INJECT_ACTIONS_HEADER';
 export const DEFAULT_TRIGGER_POSITION = 60;
 export function expandHeader() {
   return {type: EXPAND_HEADER};
@@ -30,4 +31,8 @@ export function injectBarContentSummaryHeader(Component) {
 
 export function injectBarContentExpandedHeader(Component) {
   return {type: INJECT_BAR_CONTENT_EXPANDED_HEADER, Component};
+}
+
+export function injectActionHeader(actions){
+  return {type: INJECT_ACTIONS_HEADER, actions};
 }
