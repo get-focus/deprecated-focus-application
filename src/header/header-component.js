@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const fixedStyle = {position: 'fixed', width: '100%', top: '0px'};
+const fixedStyle = {position: 'fixed', width: '100%', top: '0px', zIndex: 1000};
 
 const Dropdown = props => <div>{JSON.stringify(props, null, 4)}</div>
 
@@ -27,18 +27,19 @@ function HeaderComponent({
   BarContentSummary,
   BarContentRight,
   BarContentExpanded,
+  ContentActionsComponent,
   triggerPosition,
   actions
 }){
-    return (<header data-focus='header-bar' style={isExpanded ? undefined : fixedStyle}>
-        <nav data-focus='bar' style={{display: 'flex', justifyContent: 'space-between'}}>
+    return (<header data-focus='header-bar' data-is-expanded={isExpanded}>
+        <nav data-focus='bar'>
           <BarContentLeft />
           {!isExpanded && <BarContentSummary />}
           <BarContentRight/>
         </nav>
         {isExpanded ?  <BarContentExpanded/> :  <div style={{width: '100%', height: `${triggerPosition}px`}}></div>}
         {/* Actions primary and secondary*/}
-        {actions && <ContentActions primary={actions.primary} secondary={actions.secondary} />}
+        {actions && <ContentActionsComponent primary={actions.primary} secondary={actions.secondary} />}
     </header>)
 }
 const fakeStyle = {backgroundColor: 'blue', color: 'white'};
@@ -49,7 +50,8 @@ HeaderComponent.defaultProps = {
   BarContentSummary: fakeComponentCreator('BarContentSummary'),
   BarContentRight: fakeComponentCreator('BarContentRight'),
   BarContentExpanded: fakeComponentCreator('BarContentExpanded'),
-  actions: {primary: [], secondary: []}
+  actions: {primary: [], secondary: []},
+  ContentActionsComponent: ContentActions
 }
 
 HeaderComponent.propTypes = {
