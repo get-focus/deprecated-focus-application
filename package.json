@@ -1,8 +1,8 @@
 {
   "name": "focus-application",
-  "version": "0.0.11",
-  "files": ["lib"],
-  "main": "./lib/main.js",
+  "version": "3.0.0-rc1",
+  "files": ["confirm", "debug", "fetch", "header", "layout", "messages", "role", "index.js", "store.js", "App.css", "App.js", "index.css", "index.js", "logo.svg", "main.js"],
+  "main": "main.js",
   "devDependencies": {
     "babel-preset-focus": "^0.6.1",
     "chai": "^3.5.0",
@@ -31,7 +31,7 @@
     "start": "react-scripts start",
     "build-prod": "react-scripts build",
     "prepublish": "npm run build-lib",
-    "build-lib": "rimraf lib && node ../babel-focus/babelify.js && npm run copy-sass",
+    "build-lib": "node node_modules/babel-preset-focus/babelify.js && npm run copy-sass",
     "eject": "react-scripts eject",
     "test": "mocha src/**/__tests__/**.js",
     "test:watch": "mocha src/**/__tests__/**.js --watch",
