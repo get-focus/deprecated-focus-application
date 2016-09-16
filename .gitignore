@@ -9,3 +9,21 @@ build
 # misc
 .DS_Store
 npm-debug.log
+
+#build files :+1:
+
+confirm
+debug
+fetch
+header
+layout
+messages
+role
+index.js
+store.js
+App.css
+App.js
+index.css
+index.js
+logo.svg
+main.js
