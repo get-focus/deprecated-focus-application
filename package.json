@@ -1,6 +1,6 @@
 {
   "name": "focus-application",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "files": ["lib"],
   "main": "./lib/main.js",
   "devDependencies": {

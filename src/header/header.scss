@@ -10,5 +10,26 @@ header[data-focus='header-bar']{
     top: '0px';
     z-index: 1000
   }
+  [data-focus="content-actions"] {
+      button {
+          margin: 0 5px;
+          &.mdl-button--fab {
+              background-color: #FFF !important;
+          }
+          &:hover {
+              background-color: #F9F9F9 !important;
+          }
+      }
+      div {
+          float: right;
+          margin-left: 15px;
+          position: relative;
+          width: 60px;
+          height: 56px;
 
+          .menu__container {
+              margin-top: -50px
+          }
+      }
+  }
 }
