@@ -1,0 +1,14 @@
+header[data-focus='header-bar']{
+  background-color: rgba(0,0,0,0.5);
+  nav[data-focus='bar']{
+    display: flex;
+    justify-content: space-between;
+  }
+  &[data-is-expanded='false']{
+    position: fixed;
+    width: 100%;
+    top: '0px';
+    z-index: 1000
+  }
+
+}

@@ -14,7 +14,9 @@ export function getApplicationReducer(){
   });
 }
 
-export default function create(){
+function create(){
   return createStore(
     getApplicationReducer(), applyMiddleware(thunk));
 }
+
+export default create;

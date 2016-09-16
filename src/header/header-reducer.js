@@ -6,6 +6,7 @@ import {
   INJECT_BAR_CONTENT_RIGHT_HEADER,
   INJECT_BAR_CONTENT_EXPANDED_HEADER,
   TRIGGER_POSITION_HEADER,
+  INJECT_ACTIONS_HEADER,
   DEFAULT_TRIGGER_POSITION
 } from './header-actions';
 
@@ -32,6 +33,8 @@ function headerReducer(state = {triggerPosition: DEFAULT_TRIGGER_POSITION}, acti
       return {...state, BarContentSummary: action.Component};
     case INJECT_BAR_CONTENT_EXPANDED_HEADER:
       return {...state, BarContentExpanded: action.Component};
+    case INJECT_ACTIONS_HEADER:
+      return {...state, actions: action.actions};
     default:
       return state;
   }

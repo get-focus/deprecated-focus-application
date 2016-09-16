@@ -16,19 +16,21 @@ class MessageWithTtl extends PureComponent{
     clearTimeout(this.timeoutId);
   }
   render(){
-    return <Message {...this.props} />
+    const {MessageComponent, ...otherMessageProps} = this.props;
+    return <MessageComponent {...otherMessageProps} />
   }
 }
 
 MessageWithTtl.defaultProps = {
-  ttl: 5000
+  ttl: 5000,
+  MessageComponent: Message
 };
 
-export default function MessageCenter({messages,deleteMessage,type, ...otherProps}){
+export default function MessageCenter({MessageComponent, messages,deleteMessage,type, ...otherProps}){
   return <ul data-focus='message-center'>
     {
       messages.map(
-        msg => <MessageWithTtl key={msg.id} {...msg} ttl={otherProps[`ttl${capitalize(type)}`]} deleteMessage={deleteMessage}/>
+        msg => <MessageWithTtl key={msg.id} {...msg} ttl={otherProps[`ttl${capitalize(type)}`]} deleteMessage={deleteMessage} MessageComponent={MessageComponent}/>
       )
     }
   </ul>;
@@ -40,5 +42,6 @@ MessageCenter.propTypes = {
 MessageCenter.defaultProps = {
   messages: [],
   ttlInfo: 10000,
-  ttlSuccess: 5000
+  ttlSuccess: 5000,
+  MessageComponent: Message
 }
