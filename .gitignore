@@ -1,5 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 lib
+
 # dependencies
 node_modules
 
@@ -10,8 +11,7 @@ build
 .DS_Store
 npm-debug.log
 
-#build files :+1:
-
+#build files
 confirm
 debug
 fetch
