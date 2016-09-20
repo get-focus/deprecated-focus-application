@@ -12,62 +12,58 @@ $bar-summary-right:200px;
 header[data-focus='header']{
     @include shadow();
     background-color: #FFF;
-    [data-focus='header-bar'] {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        height:$bar-element-height;
-        overflow: hidden;
-
-        & > div {
-            padding: $bar-padding-height 10px;
-            background: transparent;
+    position: relative;
+    & > nav {
+        [data-focus='header-bar'] {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            height:$bar-element-height;
             overflow: hidden;
-            white-space: nowrap;
+
+            & > * {
+                padding: $bar-padding-height 10px;
+                background: transparent;
+                overflow: hidden;
+                white-space: nowrap;
+                display: flex;
+                align-items: center;
+            }
+            [data-focus='header-bar-left'] {
+                flex-grow: 1;
+            }
+            [data-focus="header-bar-summary"] {
+                flex-grow: 10;
+            }
+            [data-focus='header-bar-right'] {
+                text-align: right;
+                flex-grow: 1;
+            }
         }
-        [data-focus='header-bar-left'] {
-            flex-grow: 1;
+        [data-focus="header-bar-actions"] {
+            position: absolute;
+            right: 250px;
+            bottom: -30px;
         }
-        [data-focus="header-bar-summary"] {
-            flex-grow: 10;
-        }
-        [data-focus='header-bar-right'] {
-            text-align: right;
-            flex-grow: 1;
-        }
+    }
+
+    [data-focus='header-bar-expanded'] {
+        padding: 20px 50px;
     }
 
     &[data-is-expanded='false'] {
         margin-top: $bar-element-height;
-        [data-focus='header-bar'] {
-            @include shadow();
-            background-color: #FFF;
+        & > nav {
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 1000
+            z-index: 1000;
+            [data-focus='header-bar'] {
+                position: relative;
+                @include shadow();
+                background-color: #FFF;
+            }
         }
     }
 
-    // [data-focus="header-bar-actions"] {
-    //     button {
-    //         margin: 0 5px;
-    //         &.mdl-button--fab {
-    //             background-color: #FFF !important;
-    //         }
-    //         &:hover {
-    //             background-color: #F9F9F9 !important;
-    //         }
-    //     }
-    //     div {
-    //         float: right;
-    //         margin-left: 15px;
-    //         position: relative;
-    //         width: 60px;
-    //         height: 56px;
-    //         .menu__container {
-    //             margin-top: -50px
-    //         }
-    //     }
-    // }
 }
