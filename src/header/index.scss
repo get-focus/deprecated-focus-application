@@ -1,0 +1,73 @@
+$bar-menu-size:60px;
+$bar-padding-height:5px;
+$bar-element-height:($bar-menu-size) - ($bar-padding-height * 2);
+
+$bar-summary-left:200px;
+$bar-summary-right:200px;
+
+@mixin shadow($level:2, $transparence1:0.14, $transparence2:0.2, $transparence3:0.12) {
+    box-shadow: 0 #{$level}px #{$level}px 0 rgba(0,0,0,$transparence1),0 3px 1px -2px rgba(0,0,0,$transparence2),0 1px 5px 0 rgba(0,0,0,$transparence3);
+}
+
+header[data-focus='header']{
+    @include shadow();
+    background-color: #FFF;
+    [data-focus='header-bar'] {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        height:$bar-element-height;
+        overflow: hidden;
+
+        & > div {
+            padding: $bar-padding-height 10px;
+            background: transparent;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        [data-focus='header-bar-left'] {
+            flex-grow: 1;
+        }
+        [data-focus="header-bar-summary"] {
+            flex-grow: 10;
+        }
+        [data-focus='header-bar-right'] {
+            text-align: right;
+            flex-grow: 1;
+        }
+    }
+
+    &[data-is-expanded='false'] {
+        margin-top: $bar-element-height;
+        [data-focus='header-bar'] {
+            @include shadow();
+            background-color: #FFF;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000
+        }
+    }
+
+    // [data-focus="header-bar-actions"] {
+    //     button {
+    //         margin: 0 5px;
+    //         &.mdl-button--fab {
+    //             background-color: #FFF !important;
+    //         }
+    //         &:hover {
+    //             background-color: #F9F9F9 !important;
+    //         }
+    //     }
+    //     div {
+    //         float: right;
+    //         margin-left: 15px;
+    //         position: relative;
+    //         width: 60px;
+    //         height: 56px;
+    //         .menu__container {
+    //             margin-top: -50px
+    //         }
+    //     }
+    // }
+}
