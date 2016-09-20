@@ -1,6 +1,6 @@
 {
     "name": "focus-application",
-    "version": "3.0.0-rc2",
+    "version": "3.0.0-rc3",
     "files": ["confirm", "debug", "fetch", "header", "layout", "messages", "role", "index.js", "store.js", "App.css", "App.js", "index.css", "index.js", "logo.svg", "main.js"],
     "main": "main.js",
     "devDependencies": {
