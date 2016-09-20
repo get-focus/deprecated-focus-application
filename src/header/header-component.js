@@ -55,7 +55,7 @@ const fakeComponentCreator = name => function(props){return <span>{name} - {JSON
         BarContentSummary: fakeComponentCreator('BarContentSummary'),
         BarContentRight: fakeComponentCreator('BarContentRight'),
         BarContentExpanded: fakeComponentCreator('BarContentExpanded'),
-        actions: {primary: [], secondary: []},
+        actions: {primary: []},
         ContentActionsComponent: ContentActions
     }
 
