@@ -37,6 +37,7 @@ header[data-focus='header'] {
             [data-focus='header-bar-right'] {
                 text-align: right;
                 flex-grow: 1;
+                justify-content: flex-end;
             }
         }
         [data-focus="header-bar-actions"] {
