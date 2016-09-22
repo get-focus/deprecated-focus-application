@@ -1,26 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
-const fixedStyle = {position: 'fixed', width: '100%', top: '0px', zIndex: 1000};
-
-const Dropdown = props => <div>{JSON.stringify(props, null, 4)}</div>
-
-function ContentActions({primary, secondary}){
-    return (
-        <div data-focus='content-actions'>
-            {primary.map((primary) => {
-                if(Array.isArray(primary.action)) {
-                    return <Dropdown iconProps={{name: primary.icon}} operationList={primary.action} shape='fab'/>;
-                } else {
-                    return (
-                        <Button handleOnClick={primary.action} icon={primary.icon} label={primary.label} shape='fab' style={{className: primary.className}} type='button'/>
-                    );
-                }
-            })}
-            <Dropdown iconProps={{name: 'more_vert'}} operationList={secondary} shape='fab'/>
-        </div>
-    );
-}
-
+const FakeCustomActions = () => <div>You can 'focus-components/header-actions' component or define your own component</div>
 
 function HeaderComponent({
     isExpanded,
@@ -47,24 +27,24 @@ function HeaderComponent({
     );
 }
 
-const fakeComponentCreator = name => function(props){return <span>{name} - {JSON.stringify(props)}</span>}
+const fakeComponentCreator = name => props => <span>{name} - {JSON.stringify(props)}</span>
 
-    HeaderComponent.defaultProps = {
-        isExpanded: true,
-        BarContentLeft: fakeComponentCreator('BarContentLeft'),
-        BarContentSummary: fakeComponentCreator('BarContentSummary'),
-        BarContentRight: fakeComponentCreator('BarContentRight'),
-        BarContentExpanded: fakeComponentCreator('BarContentExpanded'),
-        actions: {primary: []},
-        ContentActionsComponent: ContentActions
-    }
+HeaderComponent.defaultProps = {
+    isExpanded: true,
+    BarContentLeft: fakeComponentCreator('BarContentLeft'),
+    BarContentSummary: fakeComponentCreator('BarContentSummary'),
+    BarContentRight: fakeComponentCreator('BarContentRight'),
+    BarContentExpanded: fakeComponentCreator('BarContentExpanded'),
+    ContentActionsComponent: FakeCustomActions
+};
 
-    HeaderComponent.propTypes = {
-        isExpanded: PropTypes.bool,
-        BarContentLeft: PropTypes.func,
-        BarContentSummary: PropTypes.func,
-        BarContentRight: PropTypes.func,
-        BarContentExpanded: PropTypes.func
-    }
+HeaderComponent.propTypes = {
+    isExpanded: PropTypes.bool,
+    BarContentLeft: PropTypes.func,
+    BarContentSummary: PropTypes.func,
+    BarContentRight: PropTypes.func,
+    BarContentExpanded: PropTypes.func,
+    ContentActionsComponent: PropTypes.func
+};
 
-    export default HeaderComponent
+export default HeaderComponent;
