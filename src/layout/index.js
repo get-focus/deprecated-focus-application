@@ -1,38 +1,32 @@
 import React, { PropTypes} from 'react';
 
 
-const fakeComponentCreator = name => function(props){return <pre><h2>{name}</h2><code>{JSON.stringify(props, null, 4)}</code></pre>}
-function Layout({
-  AppHeader,
-  children,
-  ConfirmWrapper,
-  ErrorCenter,
-  Footer,
-  LoadingBar,
-  menuType,
-  Menu,
-  MessageCenter,
-  LoadingStatusBar,
-  DevTools,
-  OtherRootComponent,
-  ...otherProps
-}){
-  return  <div data-focus='layout' data-menu={'left'} {...otherProps}>
-            {
-                LoadingBar && <LoadingBar />
+const fakeComponentCreator = name => (props) => <pre><h2>{name}</h2><code>{JSON.stringify(props, null, 4)}</code></pre>
 
-            }
+function Layout({
+    AppHeader,
+    children,
+    ConfirmWrapper,
+    ErrorCenter,
+    Footer,
+    LoadingBar,
+    menuType,
+    Menu,
+    MessageCenter,
+    LoadingStatusBar,
+    DevTools,
+    OtherRootComponent,
+    ...otherProps
+}){
+    const componentData = Menu ? { 'data-menu': 'left' } : {};
+    return  (
+        <div data-focus='layout' {...componentData} {...otherProps}>
+            {LoadingBar && <LoadingBar />}
             <MessageCenter />
-            {ErrorCenter &&
-                <ErrorCenter />
-            }
-            {
-                ConfirmWrapper && <ConfirmWrapper />
-            }
+            {ErrorCenter && <ErrorCenter />}
+            {ConfirmWrapper && <ConfirmWrapper />}
             <AppHeader />
-            {Menu &&
-                <Menu />
-            }
+            {Menu && <Menu />}
             <div data-focus='page-content'>
                 {children}
             </div>
@@ -41,17 +35,18 @@ function Layout({
                     <Footer />
                 </footer>
             }
-            { DevTools && <DevTools />}
+            { DevTools && <DevTools /> }
             { OtherRootComponent && <OtherRootComponent /> }
-        </div>;
+        </div>
+    );
 }
 
 
 Layout.defaultProps = {
     AppHeader: fakeComponentCreator('AppHeader'), //default app header.
     // ErrorCenter: fakeComponentCreator('ErrorCenter'), // default error center
-  //  LoadingBar: fakeComponentCreator('LoadingBar'), // default loading bar
-  //  LoadingStatusBar: fakeComponentCreator('LoadingStatusBar'),
+    //  LoadingBar: fakeComponentCreator('LoadingBar'), // default loading bar
+    //  LoadingStatusBar: fakeComponentCreator('LoadingStatusBar'),
     MessageCenter: fakeComponentCreator('MessageCenter'), // default message center
     ConfirmWrapper: fakeComponentCreator('ConfirmWrapper') // default confirm wrapper,
 };
