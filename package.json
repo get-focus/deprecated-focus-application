@@ -8,6 +8,7 @@
     "header",
     "layout",
     "messages",
+    "translation",
     "role",
     "index.js",
     "store.js",
