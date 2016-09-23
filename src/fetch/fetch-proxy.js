@@ -23,17 +23,18 @@ function updateRequestStatus(request, status) {
 // see https://github.com/acdlite/redux-promise/blob/master/src/index.js
 function focusFetchProxy(...fetchArguments) {
     const requestStatus = createRequestStatus();
-    updateRequestStatus(requestStatus, 'pending');
+    updateRequestStatus(requestStatus, PENDING);
     return fetch(...fetchArguments)
       .then(response => {
         if(response.ok){
-          updateRequestStatus(requestStatus, 'success')
+          updateRequestStatus(requestStatus, SUCCESS)
+          return {response: response, status: SUCCESS};
         } else {
-          updateRequestStatus(requestStatus, 'error')
+          updateRequestStatus(requestStatus,ERROR)
+          return {response: response, status: ERROR};
         }
-        return response;
       }).catch(error => {
-        updateRequestStatus(requestStatus, 'error');
+        updateRequestStatus(requestStatus,ERROR);
         throw error;
       });
 }
