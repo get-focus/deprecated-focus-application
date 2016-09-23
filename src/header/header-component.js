@@ -12,17 +12,19 @@ function HeaderComponent({
     triggerPosition,
     actions
 }) {
+    const isFixed = triggerPosition !== undefined && triggerPosition === 0;
+    const isNotFixedOrExpanded = isFixed ? false : isExpanded;
     return (
-        <header data-focus='header' data-is-expanded={isExpanded}>
+        <header data-focus='header' data-is-expanded={isNotFixedOrExpanded}>
             <nav>
                 <div data-focus='header-bar'>
                     <div data-focus='header-bar-left'><BarContentLeft /></div>
-                    {!isExpanded && <div data-focus='header-bar-summary'><BarContentSummary /></div>}
+                    {!isNotFixedOrExpanded && <div data-focus='header-bar-summary'><BarContentSummary /></div>}
                     <div data-focus='header-bar-right'><BarContentRight/></div>
                 </div>
                 {actions && <div data-focus='header-bar-actions'><ContentActionsComponent primary={actions.primary} secondary={actions.secondary} /></div>}
             </nav>
-            <div data-focus='header-bar-expanded'><BarContentExpanded/></div>
+            {!isFixed && <div data-focus='header-bar-expanded'><BarContentExpanded /></div>}
         </header>
     );
 }
