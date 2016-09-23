@@ -1,5 +1,12 @@
 import fetch from 'isomorphic-fetch';
 import {updateRequest} from './fetch-actions';
+export const PENDING = 'PENDING';
+export const SUCCESS = 'SUCCESS';
+export const ERROR = 'ERROR';
+
+
+
+
 let requestID = 0;
 let dispatch = (...dispatchArgs) => {
   throw new Error(`FOCUS_APPLICATION_FETCH, you need to create your focus fetch proxy using createfocusFetchProxy and by providing your dispatcher`, dispatchArgs);
@@ -23,17 +30,18 @@ function updateRequestStatus(request, status) {
 // see https://github.com/acdlite/redux-promise/blob/master/src/index.js
 function focusFetchProxy(...fetchArguments) {
     const requestStatus = createRequestStatus();
-    updateRequestStatus(requestStatus, 'pending');
+    updateRequestStatus(requestStatus, PENDING);
     return fetch(...fetchArguments)
       .then(response => {
         if(response.ok){
-          updateRequestStatus(requestStatus, 'success')
+          updateRequestStatus(requestStatus, SUCCESS)
+          return {response: response, status: SUCCESS};
         } else {
-          updateRequestStatus(requestStatus, 'error')
+          updateRequestStatus(requestStatus,ERROR)
+          return {response: response, status: ERROR};
         }
-        return response;
       }).catch(error => {
-        updateRequestStatus(requestStatus, 'error');
+        updateRequestStatus(requestStatus,ERROR);
         throw error;
       });
 }
