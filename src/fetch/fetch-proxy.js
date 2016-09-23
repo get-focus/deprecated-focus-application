@@ -1,5 +1,10 @@
 import fetch from 'isomorphic-fetch';
 import {updateRequest} from './fetch-actions';
+export const PENDING = 'PENDING';
+export const SUCCESS = 'SUCCESS';
+export const ERROR = 'ERROR';
+
+
 let requestID = 0;
 let dispatch = (...dispatchArgs) => {
   throw new Error(`FOCUS_APPLICATION_FETCH, you need to create your focus fetch proxy using createfocusFetchProxy and by providing your dispatcher`, dispatchArgs);
