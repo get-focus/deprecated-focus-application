@@ -1,5 +1,4 @@
 
-import assign from 'lodash/assign'
 
 export const intializeTranslation = (i18nextProject, language = 'fr-FR', resources = []) => {
     const DEFAULT_RESSOURCE = { [language] : { translation : {focus: 'test'}}}
@@ -7,7 +6,7 @@ export const intializeTranslation = (i18nextProject, language = 'fr-FR', resourc
         lng: language,
         resources: {
           [language] : {
-            translation : resources.reduce( (valeurPrécédente, valeurCourante) => assign(valeurPrécédente, valeurCourante), {})
+            translation : resources.reduce( (acc, newValue) => Object.assign(acc, newValue), {})
           }
         }
     }, (err, t) => {

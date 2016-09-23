@@ -55,8 +55,5 @@
   },
   "eslintConfig": {
     "extends": "./node_modules/react-scripts/config/eslint.js"
-  },
-  "dependencies": {
-    "lodash": "^4.16.1"
   }
 }
