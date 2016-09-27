@@ -11,9 +11,10 @@
 /header
 /layout
 /messages
-/session
-/translation
 /role
+/session
+/style
+/translation
 
 /npm-debug.log
 
