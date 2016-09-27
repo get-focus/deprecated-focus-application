@@ -22,8 +22,6 @@ class SessionProvider extends PureComponent {
           try {
               const value = await service();
               dispatch(initializeSession(value));
-              dispatch(setLocalPermissions(['value']));
-              dispatch(addGlobalRole('lol'));
           }catch(error) {
             throw new Error(`FOCUS_APPLICATION_SESSION, you need provide a service to the SessionProvider`, error);
           }
