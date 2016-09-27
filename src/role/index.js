@@ -1,29 +1,34 @@
 import  {PureComponent, PropTypes} from 'react';
 import isArray from 'lodash/isArray'
 import intersection from 'lodash/intersection'
-export const ROLE_CONTEXT_TYPE = {
-  hasAtLeastOneRole: PropTypes.func,
-  hasAllRoles: PropTypes.func
+import {connect} from 'react-redux';
+import compose from 'lodash/flowRight';
+
+export const PERMISSION_CONTEXT_TYPE = {
+  hasAtLeastOneLocalPermission: PropTypes.func,
+  hasAllLocalPermissions: PropTypes.func,
+  hasAtLeastOneGlobalPermission: PropTypes.func,
+  hasAllGlobalPermissions: PropTypes.func
 }
-export function Role(
+export function Permission(
   {hasAll,hasOne,children, emptyBlock},
-  {hasAtLeastOneRole, hasAllRoles}
+  {hasAtLeastOneLocalPermission, hasAllLocalPermissions, hasAtLeastOneGlobalPermission, hasAllGlobalPermissions}
 ) {
-    if(isArray(hasAll) && hasAllRoles(hasAll)) {
+    if(isArray(hasAll) && hasAllGlobalPermissions(hasAll)) {
         return children;
-    } else if(isArray(hasOne) && hasAtLeastOneRole(hasOne)) {
+    } else if(isArray(hasOne) && hasAtLeastOneGlobalPermission(hasOne)) {
         return children;
     }
     return emptyBlock;
 }
 
 
-Role.contextTypes = ROLE_CONTEXT_TYPE;
-Role.displayName = 'Role';
-Role.defaultProps = {
+Permission.contextTypes = PERMISSION_CONTEXT_TYPE;
+Permission.displayName = 'Permission';
+Permission.defaultProps = {
     emptyBlock: null
 };
-Role.propTypes = {
+Permission.propTypes = {
     children : PropTypes.object,
     hasOne: PropTypes.array,
     hasAll:PropTypes.array
@@ -31,31 +36,46 @@ Role.propTypes = {
 
 
 
-// internal functions to check roles.
-const hasAtLeastOneRole = (neededRoles = [], userRoles = []) => isArray(neededRoles) && intersection(neededRoles, userRoles).length > 0;
+// internal functions to check permissions.
+const hasAtLeastOnePermission = (neededPermissions = [], userPermissions = []) => isArray(neededPermissions) && intersection(neededPermissions, userPermissions).length > 0;
 
-const hasAllRoles = (neededRoles = [], userRoles = []) => isArray(neededRoles) && intersection(neededRoles, userRoles).length === neededRoles.length;
+const hasAllPermissions = (neededPermissions = [], userPermissions = []) => isArray(neededPermissions) && intersection(neededPermissions, userPermissions).length === neededPermissions.length;
 
-// Role Provider
-// The roles props should be loaded from the user informations on app start.
-// Example <RoleProvider roles={['MY_ROLE1', 'MYROLE2']}>...</RoleProvider>
-// After that you can use the Role component.
-class RoleProvider extends PureComponent {
+// Permission Provider
+// The permissions props should be loaded from the user informations on app start.
+// Example <PermissionProvider permissions={['MY_PERMISSION1', 'MYPERMISSION2']}>...</PermissionProvider>
+// After that you can use the Permission component.
+class PermissionProvider extends PureComponent {
   getChildContext() {
+      const {user, globalPermissions} = this.props;
+      if(user && !globalPermissions){
+        throw new Error(`FOCUS_APPLICATION_PERMISSION, you need provide a array of permissions to the user in the responce of the ProfileProvier`);
+
+      }
+      // if(!user || (user && user.permissions.length < 1)){
+      //   throw new Error(`FOCUS_APPLICATION_PERMISSION, you need provide a  ProfileProvier`, error);
+      // }
       return {
-          hasAtLeastOneRole: neededRoles => hasAtLeastOneRole(neededRoles, this.props.roles),
-          hasAllRoles: neededRoles => hasAllRoles(neededRoles, this.props.roles)
+          hasAtLeastOneLocalPermission: neededLocalPermissions => hasAtLeastOnePermission(neededLocalPermissions, this.props.permissions || globalPermissions),
+          hasAllLocalPermissions: neededLocalPermissions => hasAllPermissions(neededLocalPermissions, this.props.permissions || globalPermissions),
+          hasAtLeastOneGlobalPermission: neededGlobalPermissions => hasAtLeastOnePermission(neededGlobalPermissions, this.props.permissions || globalPermissions),
+          hasAllGlobalPermissions: neededGlobalPermissions => hasAllPermissions(neededGlobalPermissions, this.props.permissions || globalPermissions)
       };
   }
   render() {
       return this.props.children;
   }
 }
+const ConnectedPermissionProvider = compose(
+  connect(s=>s.session)
+)(
+  PermissionProvider
+);
 
-RoleProvider.childContextTypes = ROLE_CONTEXT_TYPE;
+PermissionProvider.childContextTypes = PERMISSION_CONTEXT_TYPE;
 
-RoleProvider.propTypes = {
-  roles: PropTypes.arrayOf(PropTypes.string)
+PermissionProvider.propTypes = {
+  permissions: PropTypes.arrayOf(PropTypes.string)
 };
 
-export const Provider = RoleProvider;
+export const Provider = ConnectedPermissionProvider;
