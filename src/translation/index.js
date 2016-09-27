@@ -10,5 +10,6 @@ export const intializeTranslation = (i18nextProject, language = 'fr-FR', resourc
         }
     }, (err, t) => {
         console.info('[FOCUS-APPLICATION] Translation initialized !');
+
     });
 };
