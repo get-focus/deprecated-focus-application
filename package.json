@@ -1,7 +1,7 @@
 {
     "name": "focus-application",
-    "version": "3.0.0-rc9",
-    "files": ["confirm", "debug", "fetch", "header", "layout", "messages","translation", "role", "index.js", "store.js", "App.css", "App.js", "index.css", "index.js", "logo.svg", "main.js"],
+    "version": "3.0.0-rc12",
+    "files": ["confirm", "debug", "fetch", "header", "layout", "messages","translation", "style", "role", "index.js", "store.js", "App.css", "App.js", "index.css", "index.js", "logo.svg", "main.js"],
     "main": "main.js",
     "devDependencies": {
         "babel-preset-focus": "^0.6.1",
