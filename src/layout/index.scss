@@ -14,26 +14,29 @@ body {
 }
 
 [data-focus="layout"] {
+    background-color: rgba(236,236,236,0.67);
     [data-focus="page-content"] {
-        padding: 10px 25px;
-        background-color: rgba(236,236,236,0.67);
+        padding: 30px 25px;
+    }
+
+    [data-focus="footer"] {
+        background-color: #FFF;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
 
     &[data-menu="left"] {
         [data-focus="page-content"] {
             margin-left: 60px;
         }
+        [data-focus="footer"] {
+            width: calc(100% - 60px);
+            margin-left: 60px;
+        }
     }
 
-    [data-focus="footer"] {
-        position: fixed;
-        bottom: 0;
-        margin-top: 30px;
-        padding: 10px;
-        text-align: center;
-        padding-left: 70px;
-        width: 100%;
-    }
+
 }
 
 /* color of the scrollbar */
