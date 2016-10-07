@@ -1,7 +1,30 @@
 {
     "name": "focus-application",
     "version": "3.0.0-rc18",
-    "files": ["confirm", "debug", "session","fetch", "header", "layout", "messages","translation", "style", "role", "util", "index.js", "store.js", "App.css", "App.js", "index.css", "index.js", "logo.svg", "main.js", "url-builder.js"],
+    "files": [
+        "behaviours",
+        "confirm",
+        "debug",
+        "fetch",
+        "header",
+        "layout",
+        "messages",
+        "session",
+        "translation",
+        "style",
+        "role",
+        "util",
+        "index.js",
+        "store.js",
+        "App.css",
+        "App.js",
+        "index.css",
+        "index.js",
+        "header.js",
+        "logo.svg",
+        "main.js",
+        "url-builder.js"
+    ],
     "main": "main.js",
     "devDependencies": {
         "babel-preset-focus": "^0.6.1",
@@ -15,7 +38,7 @@
         "react-addons-test-utils": "^15.3.1",
         "react-dom": "^15.3.1",
         "react-redux": "^4.4.5",
-        "react-scripts": "0.2.3",
+        "react-scripts": "0.6.1",
         "redux": "^3.5.2",
         "redux-thunk": "^2.1.0"
     },
@@ -39,5 +62,8 @@
     },
     "eslintConfig": {
         "extends": "./node_modules/react-scripts/config/eslint.js"
+    },
+    "dependencies": {
+        "babel-core": "^6.17.0"
     }
 }

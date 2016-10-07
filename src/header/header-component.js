@@ -29,7 +29,23 @@ function HeaderComponent({
     );
 }
 
-const fakeComponentCreator = name => props => <span>{name} - {JSON.stringify(props)}</span>
+const fakeComponentCreator = name => props => (
+    <div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <span>{name} - {JSON.stringify(props)}</span>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+);
 
 HeaderComponent.defaultProps = {
     isExpanded: true,
