@@ -49,7 +49,7 @@ export const connect = ({actions, ExpandedHeaderComponent, SummaryHeaderComponen
                     RightHeaderComponent: (RightHeaderComponent) => dispatch(injectBarContentRightHeader(RightHeaderComponent)),
                     triggerPosition: (triggerPosition) => dispatch(triggerPosition(triggerPosition))
                 }
-                return <ComponentToConnect {...this.props} {...headerActions} />
+                return <ComponentToConnect {...this.props} headerActions={headerActions} />
             }
         }
         ConnectedToHeaderComponent.props = ComponentToConnect.props;
