@@ -24,7 +24,7 @@ function HeaderComponent({
                 </div>
                 {actions && <div data-focus='header-bar-actions'><ContentActionsComponent primary={actions.primary} secondary={actions.secondary} /></div>}
             </nav>
-            {!isFixed && <div data-focus='header-bar-expanded'><BarContentExpanded /></div>}
+            {!isFixed && BarContentExpanded && <div data-focus='header-bar-expanded'><BarContentExpanded /></div>}
         </header>
     );
 }
@@ -52,7 +52,7 @@ HeaderComponent.defaultProps = {
     BarContentLeft: fakeComponentCreator('BarContentLeft'),
     BarContentSummary: fakeComponentCreator('BarContentSummary'),
     BarContentRight: fakeComponentCreator('BarContentRight'),
-    BarContentExpanded: fakeComponentCreator('BarContentExpanded'),
+    BarContentExpanded: null,
     ContentActionsComponent: FakeCustomActions
 };
 

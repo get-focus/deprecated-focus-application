@@ -7,9 +7,11 @@ import {
     injectBarContentSummaryHeader,
     triggerPosition
 } from '../header/header-actions';
+import {compose} from 'redux';
+import {connect as connectToState} from 'react-redux';
 
 
-export const connect = ({actions, ExpandedHeaderComponent, SummaryHeaderComponent, LeftHeaderComponent, RightHeaderComponent, triggerPosition}) => {
+export const connect = ({actions, ExpandedHeaderComponent, SummaryHeaderComponent, LeftHeaderComponent, RightHeaderComponent, triggerScrollPosition}) => {
     return (ComponentToConnect) => {
         class ConnectedToHeaderComponent extends PureComponent {
             componentWillMount() {
@@ -19,7 +21,7 @@ export const connect = ({actions, ExpandedHeaderComponent, SummaryHeaderComponen
                 if(ExpandedHeaderComponent) dispatch(injectBarContentExpandedHeader(ExpandedHeaderComponent));
                 if(LeftHeaderComponent) dispatch(injectBarContentLeftHeader(LeftHeaderComponent));
                 if(RightHeaderComponent) dispatch(injectBarContentRightHeader(RightHeaderComponent));
-                if(triggerPosition) dispatch(triggerPosition(triggerPosition));
+                if(triggerScrollPosition) dispatch(triggerPosition(triggerScrollPosition));
             }
             componentWillUnMount(){
                 const {store: {dispatch}} = this.context;
@@ -28,17 +30,24 @@ export const connect = ({actions, ExpandedHeaderComponent, SummaryHeaderComponen
                 if(ExpandedHeaderComponent) dispatch(injectBarContentExpandedHeader(null));
                 if(LeftHeaderComponent) dispatch(injectBarContentLeftHeader(null));
                 if(RightHeaderComponent) dispatch(injectBarContentRightHeader(null));
-                if(triggerPosition) dispatch(triggerPosition(null));
+                if(triggerScrollPosition) dispatch(triggerPosition(null));
+            }
+            componentWillReceiveProps(newProps) {
+                const {store: {dispatch}} = this.context;
+                if(this.props.lastUpdate!== newProps.lastUpdate) {
+                    const header = document.querySelector('header[data-focus="header"] [data-focus="header-bar-expanded"]');
+                    dispatch(triggerPosition(header.offsetHeight))
+                }
             }
             render() {
                 const {store: {dispatch}} = this.context;
                 const headerActions = {
-                    actions: () => dispatch(injectActionHeader(actions)),
-                    ExpandedHeaderComponent: () => dispatch(injectBarContentExpandedHeader(ExpandedHeaderComponent)),
-                    SummaryHeaderComponent: () => dispatch(injectBarContentSummaryHeader(SummaryHeaderComponent)),
-                    LeftHeaderComponent: () => dispatch(injectBarContentLeftHeader(LeftHeaderComponent)),
-                    RightHeaderComponent: () => dispatch(injectBarContentRightHeader(RightHeaderComponent)),
-                    triggerPosition: () => dispatch(triggerPosition(triggerPosition))
+                    actions: (actions) => dispatch(injectActionHeader(actions)),
+                    ExpandedHeaderComponent: (ExpandedHeaderComponent) => dispatch(injectBarContentExpandedHeader(ExpandedHeaderComponent)),
+                    SummaryHeaderComponent: (SummaryHeaderComponent) => dispatch(injectBarContentSummaryHeader(SummaryHeaderComponent)),
+                    LeftHeaderComponent: (LeftHeaderComponent) => dispatch(injectBarContentLeftHeader(LeftHeaderComponent)),
+                    RightHeaderComponent: (RightHeaderComponent) => dispatch(injectBarContentRightHeader(RightHeaderComponent)),
+                    triggerPosition: (triggerPosition) => dispatch(triggerPosition(triggerPosition))
                 }
                 return <ComponentToConnect {...this.props} {...headerActions} />
             }
@@ -51,6 +60,8 @@ export const connect = ({actions, ExpandedHeaderComponent, SummaryHeaderComponen
                 getState: PropTypes.func.isRequired
             })
         };
-        return ConnectedToHeaderComponent;
+        return compose (
+            connectToState(s=> s.header)
+        )(ConnectedToHeaderComponent);
     }
 }
