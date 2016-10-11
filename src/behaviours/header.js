@@ -11,7 +11,8 @@ import {compose} from 'redux';
 import {connect as connectToState} from 'react-redux';
 
 
-export const connect = ({actions = null, ExpandedHeaderComponent = null, SummaryHeaderComponent = null, LeftHeaderComponent = null, RightHeaderComponent = null, triggerScrollPosition = 60}) => {
+export const connect = (headerOptions) => {
+    const {actions = null, ExpandedHeaderComponent = null, SummaryHeaderComponent = null, LeftHeaderComponent = null, RightHeaderComponent = null, triggerScrollPosition = 9999} = headerOptions || {};
     return (ComponentToConnect) => {
         class ConnectedToHeaderComponent extends PureComponent {
             componentWillMount() {
@@ -21,9 +22,13 @@ export const connect = ({actions = null, ExpandedHeaderComponent = null, Summary
                 if(ExpandedHeaderComponent) dispatch(injectBarContentExpandedHeader(ExpandedHeaderComponent));
                 if(LeftHeaderComponent) dispatch(injectBarContentLeftHeader(LeftHeaderComponent));
                 if(RightHeaderComponent) dispatch(injectBarContentRightHeader(RightHeaderComponent));
-                if(triggerScrollPosition) dispatch(triggerPosition(triggerScrollPosition));
+                if(ExpandedHeaderComponent) {
+                    if(triggerScrollPosition) dispatch(triggerPosition(triggerScrollPosition));
+                } else {
+                    dispatch(triggerPosition(0));
+                }
             }
-            componentWillUnMount(){
+            componentWillUnmount(){
                 const {store: {dispatch}} = this.context;
                 if(actions) dispatch(injectActionHeader(null));
                 if(SummaryHeaderComponent) dispatch(injectBarContentSummaryHeader(null));
