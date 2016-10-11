@@ -11,7 +11,7 @@ import {compose} from 'redux';
 import {connect as connectToState} from 'react-redux';
 
 
-export const connect = ({actions, ExpandedHeaderComponent, SummaryHeaderComponent, LeftHeaderComponent, RightHeaderComponent, triggerScrollPosition}) => {
+export const connect = ({actions = null, ExpandedHeaderComponent = null, SummaryHeaderComponent = null, LeftHeaderComponent = null, RightHeaderComponent = null, triggerScrollPosition = 60}) => {
     return (ComponentToConnect) => {
         class ConnectedToHeaderComponent extends PureComponent {
             componentWillMount() {
