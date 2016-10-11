@@ -19,11 +19,11 @@ header[data-focus='header'] {
             display: flex;
             justify-content: space-between;
             height:$bar-menu-size;
-            overflow: hidden;
+            //overflow: hidden;
             & > * {
                 padding: $bar-padding-height 10px;
                 background: transparent;
-                overflow: hidden;
+                //overflow: hidden;
                 white-space: nowrap;
                 display: flex;
                 align-items: center;
