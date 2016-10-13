@@ -1,6 +1,6 @@
 {
   "name": "focus-application",
-  "version": "3.0.0-rc18",
+  "version": "3.0.0-rc20",
   "files": [
     "behaviours",
     "confirm",
