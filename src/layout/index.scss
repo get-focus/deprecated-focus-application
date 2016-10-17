@@ -2,6 +2,7 @@ $layout-background-color: #FFF;
 $layout-scrollbar-color: rgb(161, 175, 181);
 $layout-scrollbar-hover-color: #6AB2E5;
 $layout-scrollbar-background-color: #e2e2e2;
+$layout-footer-height: 100px;
 
 html {
     position: relative;
@@ -19,7 +20,7 @@ body {
     position: relative;
     z-index: 0;
     [data-focus="page-content"] {
-        padding: 30px 25px;
+        padding: 30px 25px ($layout-footer-height + 50px) 25px;
     }
 
     [data-focus="footer"] {
@@ -28,6 +29,7 @@ body {
         bottom: 0;
         width: 100%;
         z-index: -1;
+        min-height: $layout-footer-height;
     }
 
     &[data-menu="left"] {
