@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 
-const FakeCustomActions = () => <div>You can 'focus-components/header-actions' component or define your own component</div>
-
 function HeaderComponent({
     isExpanded,
     BarContentLeft,
@@ -24,20 +22,18 @@ function HeaderComponent({
                 </div>
                 {actions && <div data-focus='header-bar-actions'><ContentActionsComponent primary={actions.primary} secondary={actions.secondary} /></div>}
             </nav>
-            {!isFixed && <div data-focus='header-bar-expanded'><BarContentExpanded /></div>}
+            {!isFixed && BarContentExpanded && <div data-focus='header-bar-expanded'><BarContentExpanded /></div>}
         </header>
     );
 }
 
-const fakeComponentCreator = name => props => <span>{name} - {JSON.stringify(props)}</span>
-
 HeaderComponent.defaultProps = {
     isExpanded: true,
-    BarContentLeft: fakeComponentCreator('BarContentLeft'),
-    BarContentSummary: fakeComponentCreator('BarContentSummary'),
-    BarContentRight: fakeComponentCreator('BarContentRight'),
-    BarContentExpanded: fakeComponentCreator('BarContentExpanded'),
-    ContentActionsComponent: FakeCustomActions
+    BarContentLeft: () => null,
+    BarContentSummary: () => null,
+    BarContentRight: () => null,
+    BarContentExpanded: null,
+    ContentActionsComponent: () => null
 };
 
 HeaderComponent.propTypes = {

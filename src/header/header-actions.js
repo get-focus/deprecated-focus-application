@@ -6,33 +6,36 @@ export const INJECT_BAR_CONTENT_SUMMARY_HEADER = 'Header: INJECT_BAR_CONTENT_SUM
 export const INJECT_BAR_CONTENT_RIGHT_HEADER = 'Header: INJECT_BAR_CONTENT_RIGHT_HEADER';
 export const INJECT_BAR_CONTENT_EXPANDED_HEADER = 'Header: INJECT_BAR_CONTENT_EXPANDED_HEADER';
 export const INJECT_ACTIONS_HEADER = 'Header: INJECT_ACTIONS_HEADER';
-export const DEFAULT_TRIGGER_POSITION = 60;
+export const DEFAULT_TRIGGER_POSITION = 0;
+
 export function expandHeader() {
-  return {type: EXPAND_HEADER};
+    return {type: EXPAND_HEADER};
 }
+
 export function unExpandHeader() {
-  return {type: UNEXPAND_HEADER};
+    return {type: UNEXPAND_HEADER};
 }
+
 export function triggerPosition(value = DEFAULT_TRIGGER_POSITION) {
-  return {type: TRIGGER_POSITION_HEADER, value};
+    return {type: TRIGGER_POSITION_HEADER, value};
 }
 
 export function injectBarContentLeftHeader(Component) {
-  return {type: INJECT_BAR_CONTENT_LEFT_HEADER, Component};
+    return {type: INJECT_BAR_CONTENT_LEFT_HEADER, Component};
 }
 
 export function injectBarContentRightHeader(Component) {
-  return {type: INJECT_BAR_CONTENT_RIGHT_HEADER, Component};
+    return {type: INJECT_BAR_CONTENT_RIGHT_HEADER, Component};
 }
 
 export function injectBarContentSummaryHeader(Component) {
-  return {type: INJECT_BAR_CONTENT_SUMMARY_HEADER, Component};
+    return {type: INJECT_BAR_CONTENT_SUMMARY_HEADER, Component};
 }
 
 export function injectBarContentExpandedHeader(Component) {
-  return {type: INJECT_BAR_CONTENT_EXPANDED_HEADER, Component};
+    return {type: INJECT_BAR_CONTENT_EXPANDED_HEADER, Component};
 }
 
 export function injectActionHeader(actions){
-  return {type: INJECT_ACTIONS_HEADER, actions};
+    return {type: INJECT_ACTIONS_HEADER, actions};
 }
