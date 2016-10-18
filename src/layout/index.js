@@ -22,7 +22,7 @@ function Layout({
     return  (
         <div data-focus='layout' {...componentData} {...otherProps}>
             {LoadingBar && <LoadingBar />}
-            <MessageCenter />
+            <MessageCenter {...otherProps}/>
             {ErrorCenter && <ErrorCenter />}
             {ConfirmWrapper && <ConfirmWrapper />}
             <AppHeader />
