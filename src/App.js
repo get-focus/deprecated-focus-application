@@ -1,14 +1,10 @@
 import React, { PureComponent } from 'react';
-//import logo from './logo.svg';
-import './App.css';
 import Layout from './layout';
 import LoadingBar from './fetch';
 import ScrollTrigger from './layout/scroll-trigger';
 import {Provider, connect} from 'react-redux';
 import createfocusFetchProxy from './fetch/fetch-proxy';
 import MessageCenter from './messages';
-import './messages/message-center.css';
-
 import AppHeader from './header';
 
 import { headerIsExpandedSelector} from './header/header-reducer';

@@ -44,9 +44,6 @@ function Layout({
 
 Layout.defaultProps = {
     AppHeader: fakeComponentCreator('AppHeader'), //default app header.
-    // ErrorCenter: fakeComponentCreator('ErrorCenter'), // default error center
-    //  LoadingBar: fakeComponentCreator('LoadingBar'), // default loading bar
-    //  LoadingStatusBar: fakeComponentCreator('LoadingStatusBar'),
     MessageCenter: fakeComponentCreator('MessageCenter'), // default message center
     ConfirmWrapper: fakeComponentCreator('ConfirmWrapper') // default confirm wrapper,
 };
