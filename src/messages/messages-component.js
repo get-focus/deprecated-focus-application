@@ -2,7 +2,7 @@ import React , {PureComponent, PropTypes} from 'react';
 import i18next from 'i18next';
 import capitalize from 'lodash/capitalize';
 
-function Message({messageId, content, title, deleteMessage, i18nTranslation}){
+function Message({messageId, content, title, deleteMessage}){
     return (
         <div data-focus='message'>
             <span>{messageId}</span>
@@ -33,7 +33,7 @@ MessageWithTtl.defaultProps = {
     MessageComponent: Message
 };
 
-export default function MessageCenter({MessageComponent, messages, deleteMessage, i18nTranslation, ...otherProps}){
+export default function MessageCenter({MessageComponent, messages, deleteMessage, ...otherProps}){
     return (
         <div data-focus='message-center'>
             {messages.map((msg) => {
@@ -48,7 +48,6 @@ export default function MessageCenter({MessageComponent, messages, deleteMessage
 };
 MessageCenter.propTypes = {
     deleteMessage: PropTypes.func.isRequired,
-    i18nTranslation: PropTypes.func,
     messages: PropTypes.array.isRequired,
     ttlInfo: PropTypes.number,
     ttlError: PropTypes.number,
@@ -56,7 +55,6 @@ MessageCenter.propTypes = {
     ttlSuccess: PropTypes.number
 };
 MessageCenter.defaultProps = {
-    i18nTranslation: props => props,
     messages: [],
     MessageComponent: Message,
     ttlInfo: 5000,
