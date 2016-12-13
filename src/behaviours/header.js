@@ -10,6 +10,7 @@ import {
 import {compose} from 'redux';
 import {connect as connectToState} from 'react-redux';
 
+const Empty = () => (<span />);
 
 export const connect = (headerOptions) => {
     const {actions = null, ExpandedHeaderComponent = null, SummaryHeaderComponent = null, LeftHeaderComponent = null, RightHeaderComponent = null, triggerScrollPosition = 9999} = headerOptions || {};
@@ -30,12 +31,12 @@ export const connect = (headerOptions) => {
             }
             componentWillUnmount(){
                 const {store: {dispatch}} = this.context;
-                if(actions) dispatch(injectActionHeader(null));
-                if(SummaryHeaderComponent) dispatch(injectBarContentSummaryHeader(null));
-                if(ExpandedHeaderComponent) dispatch(injectBarContentExpandedHeader(null));
-                if(LeftHeaderComponent) dispatch(injectBarContentLeftHeader(null));
-                if(RightHeaderComponent) dispatch(injectBarContentRightHeader(null));
-                if(triggerScrollPosition) dispatch(triggerPosition(null));
+                if(actions) dispatch(injectActionHeader(Empty));
+                if(SummaryHeaderComponent) dispatch(injectBarContentSummaryHeader(Empty));
+                if(ExpandedHeaderComponent) dispatch(injectBarContentExpandedHeader(Empty));
+                if(LeftHeaderComponent) dispatch(injectBarContentLeftHeader(Empty));
+                if(RightHeaderComponent) dispatch(injectBarContentRightHeader(Empty));
+                if(triggerScrollPosition) dispatch(triggerPosition(Empty));
             }
             componentWillReceiveProps(newProps) {
                 const {store: {dispatch}} = this.context;
