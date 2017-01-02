@@ -32,9 +32,9 @@ function focusFetchProxy(...fetchArguments) {
     return fetch(...fetchArguments)
       .then(response => {
         if(response.ok){
-          return response.json().then(data => ({...data}))
+          return response.json().then(data => ({response: data, updateRequestStatus: updateRequest(requestStatus, status) }))
         } else {
-          return response.json().then(data => ({...data, status: ERROR}))
+          return response.json().then(data => ({response: data, updateRequestStatus: updateRequest(requestStatus, status) , status: ERROR}))
         }
       }).catch(error => {
         throw error;
