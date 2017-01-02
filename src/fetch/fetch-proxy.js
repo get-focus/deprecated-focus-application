@@ -6,10 +6,6 @@ export const ERROR = 'ERROR';
 
 
 let requestID = 0;
-let dispatch = (...dispatchArgs) => {
-  throw new Error(`FOCUS_APPLICATION_FETCH, you need to create your focus fetch proxy using createfocusFetchProxy and by providing your dispatcher`, dispatchArgs);
-}
-
 function createRequestStatus() {
     requestID++;
     return {
@@ -17,37 +13,24 @@ function createRequestStatus() {
     };
 }
 
-function updateRequestStatus(request, status) {
-    if(!request || !request.id ) {throw new Error('focusFetchProxy: Your request should have an id...')}
-    dispatch(updateRequest(request, status));
-    return request;
-}
 
 // This function is a proxy on the ES6 fetch, it just adds action dispatch before real fetches
 // TODO: maybe this could be a middleware...
 // see https://github.com/acdlite/redux-promise/blob/master/src/index.js
 function focusFetchProxy(...fetchArguments) {
     const requestStatus = createRequestStatus();
-    updateRequestStatus(requestStatus, PENDING);
     return fetch(...fetchArguments)
       .then(response => {
         if(response.ok){
-          updateRequestStatus(requestStatus, SUCCESS)
-          return {response: response, status: SUCCESS};
+          return response.json().then(data => ({response: data, updateRequestStatus: updateRequest(requestStatus, status) }))
         } else {
-          updateRequestStatus(requestStatus,ERROR)
-          return {response: response, status: ERROR};
+          return response.json().then(data => ({response: data, updateRequestStatus: updateRequest(requestStatus, status) , status: ERROR}))
         }
       }).catch(error => {
-        updateRequestStatus(requestStatus,ERROR);
         throw error;
       });
 }
 
-function createfocusFetchProxy(projectDispatcher){
-  dispatch = projectDispatcher;
-  return focusFetchProxy;
-}
 
 /*
 function isPromise(val) {
@@ -68,4 +51,4 @@ export function focusFetchMiddleware({ dispatch }){
   };
 }
 */
-export default createfocusFetchProxy;
+export default focusFetchProxy;
