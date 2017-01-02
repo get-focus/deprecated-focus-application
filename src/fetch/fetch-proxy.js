@@ -32,6 +32,18 @@ function focusFetchProxy(...fetchArguments) {
 }
 
 
+export const focusFetch = ({url, method, data, options}) => {
+    return focusFetchProxy(url, {
+        method: method,
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        ...options
+    });
+}
+
+
 /*
 function isPromise(val) {
 return val && typeof val.then === 'function';
@@ -51,4 +63,4 @@ export function focusFetchMiddleware({ dispatch }){
   };
 }
 */
-export default focusFetchProxy;
+export default focusFetch;
