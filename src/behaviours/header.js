@@ -31,7 +31,7 @@ export const connect = (headerOptions) => {
             }
             componentWillUnmount(){
                 const {store: {dispatch}} = this.context;
-                if(actions) dispatch(injectActionHeader(Empty));
+                if(actions) dispatch(injectActionHeader({}));
                 if(SummaryHeaderComponent) dispatch(injectBarContentSummaryHeader(Empty));
                 if(ExpandedHeaderComponent) dispatch(injectBarContentExpandedHeader(Empty));
                 if(LeftHeaderComponent) dispatch(injectBarContentLeftHeader(Empty));
