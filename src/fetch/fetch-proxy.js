@@ -22,9 +22,9 @@ function focusFetchProxy(...fetchArguments) {
     return fetch(...fetchArguments)
       .then(response => {
         if(response.ok){
-          return response.json().then(data => ({response: data, updateRequestStatus: updateRequest(requestStatus, status) }))
+          return response.json().then(data => ({...data, __Focus__updateRequestStatus: updateRequest(requestStatus, status) }))
         } else {
-          return response.json().then(data => ({response: data, updateRequestStatus: updateRequest(requestStatus, status) , status: ERROR}))
+          return response.json().then(data => ({...data, __Focus__updateRequestStatus: updateRequest(requestStatus, status) , __Focus__status: ERROR}))
         }
       }).catch(error => {
         throw error;
