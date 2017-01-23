@@ -24,7 +24,6 @@ function Layout({
             {LoadingBar && <LoadingBar />}
             <MessageCenter {...otherProps}/>
             {ErrorCenter && <ErrorCenter />}
-            {ConfirmWrapper && <ConfirmWrapper />}
             <AppHeader />
             {Menu && <Menu />}
             <div data-focus='page-content'>
@@ -35,6 +34,7 @@ function Layout({
                     <Footer />
                 </footer>
             }
+            {ConfirmWrapper && <ConfirmWrapper />}
             { DevTools && <DevTools /> }
             { OtherRootComponent && <OtherRootComponent /> }
         </div>
