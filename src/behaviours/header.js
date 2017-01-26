@@ -1,5 +1,6 @@
 import React, {PropTypes, PureComponent} from 'react';
 import {
+    unExpandHeader,
     injectActionHeader,
     injectBarContentExpandedHeader,
     injectBarContentLeftHeader,
@@ -39,8 +40,11 @@ export const connect = (headerOptions) => {
                 if(triggerScrollPosition) dispatch(triggerPosition(Empty));
             }
             componentWillReceiveProps(newProps) {
-                const {store: {dispatch}} = this.context;
-                if(this.props.lastUpdate!== newProps.lastUpdate) {
+                const isDateUpdated = this.props.lastUpdate!== newProps.lastUpdate;
+                const isTriggerPositionChanged = this.props.triggerPosition !== newProps.triggerPosition;
+                const shouldTriggerProsition = isDateUpdated || isTriggerPositionChanged;
+                if(shouldTriggerProsition) {
+                    const {store: {dispatch}} = this.context;
                     const header = document.querySelector('header[data-focus="header"] [data-focus="header-bar-expanded"]');
                     dispatch(triggerPosition(header.offsetHeight))
                 }
@@ -67,7 +71,7 @@ export const connect = (headerOptions) => {
             })
         };
         return compose (
-            connectToState(s=> s.header)
+            connectToState(s => s.header)
         )(ConnectedToHeaderComponent);
     }
 }
