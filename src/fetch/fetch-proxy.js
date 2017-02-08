@@ -29,16 +29,17 @@ function focusFetchProxy(...fetchArguments) {
     });
 }
 
-export const fetchBuilder = (baseUrl) => {
-    return (url, method, data) => {
+export const fetchBuilder = ({baseUrl, useCredentials = false}) => {
+    return ({url, method, data, options}) => {
         const calledUrl = `${baseUrl}/${url}`;
-        return {url: calledUrl, method, data, options};
+        return focusFetch({url: calledUrl, method, data, options, useCredentials});
     }
 };
 
-export const focusFetch = ({url, method, data, options}) => {
+export const focusFetch = ({url, method, data, options, useCredentials = false}) => {
+    const credentialProps = credentialProps ? { useCredentials: 'include' } : {}; //pass cookies, for authentication
     return focusFetchProxy(url, {
-        credentials: 'include', //pass cookies, for authentication
+        useCredentials: useCredentials ? 'include' : undefined,
         method: method,
         body: JSON.stringify(data),
         headers: {
