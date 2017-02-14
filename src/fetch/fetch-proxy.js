@@ -32,7 +32,7 @@ function focusFetchProxy(...fetchArguments) {
 export const fetchBuilder = ({baseUrl, useCredentials = false, optionsBuilder}) => {
     return ({url, method, data, options}) => {
         const calledUrl = `${baseUrl}/${url}`;
-        return focusFetch({url: calledUrl, method, data, {...optionsBuilder, ...options}, useCredentials});
+        return focusFetch({url: calledUrl, method, data, options: {...optionsBuilder, ...options}, useCredentials});
     }
 };
 
