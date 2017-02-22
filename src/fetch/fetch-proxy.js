@@ -14,6 +14,11 @@ function createRequestStatus() {
 }
 
 
+function _parseResponse(response, requestStatus, status, error = false){
+    const result = response ? JSON.parse(response) : {}
+    if(error) return {...result, __Focus__updateRequestStatus: updateRequest(requestStatus, status),  __Focus__status: ERROR}
+    return {...result, __Focus__updateRequestStatus: updateRequest(requestStatus, status)}
+}
 // This function is a proxy on the ES6 fetch, it just adds action dispatch before real fetches
 // TODO: maybe this could be a middleware...
 // see https://github.com/acdlite/redux-promise/blob/master/src/index.js
@@ -22,9 +27,9 @@ function focusFetchProxy(...fetchArguments) {
     return fetch(...fetchArguments)
       .then(response => {
         if(response.ok){
-          return response.json().then(data => ({...data, __Focus__updateRequestStatus: updateRequest(requestStatus, status) }))
+            return response.text().then(data => _parseResponse(data, requestStatus, status))
         } else {
-          return response.json().then(data => ({...data, __Focus__updateRequestStatus: updateRequest(requestStatus, status) , __Focus__status: ERROR}))
+            return response.text().then(data => _parseResponse(data, requestStatus, status, true))
         }
       }).catch(error => {
         throw error;
