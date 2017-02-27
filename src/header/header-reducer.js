@@ -20,7 +20,8 @@ export function headerIsExpandedSelector(state = {}){
 function headerReducer(state = {triggerPosition: DEFAULT_TRIGGER_POSITION}, action = {}){
     switch (action.type) {
         case TRIGGER_POSITION_HEADER:
-        return {...state, triggerPosition: action.value}
+        const isExpanded = action.value === 0 ? false : true;
+        return {...state, triggerPosition: action.value, isExpanded: isExpanded}
         case EXPAND_HEADER:
         return {...state, isExpanded: true};
         case UNEXPAND_HEADER:
