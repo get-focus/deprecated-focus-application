@@ -1,6 +1,5 @@
 import React, {PropTypes, PureComponent} from 'react';
 import {
-    unExpandHeader,
     injectActionHeader,
     injectBarContentExpandedHeader,
     injectBarContentLeftHeader,
@@ -15,20 +14,21 @@ const Empty = () => (<span />);
 
 export const connect = (headerOptions) => {
     const {actions = null, ExpandedHeaderComponent = null, SummaryHeaderComponent = null, LeftHeaderComponent = null, RightHeaderComponent = null, triggerScrollPosition = 9999} = headerOptions || {};
+    const isStaticHeader = triggerScrollPosition === 0 || ExpandedHeaderComponent === null;
     return (ComponentToConnect) => {
         class ConnectedToHeaderComponent extends PureComponent {
             componentWillMount() {
                 const {store: {dispatch}} = this.context;
                 if(actions) dispatch(injectActionHeader(actions));
-                if(SummaryHeaderComponent) dispatch(injectBarContentSummaryHeader(SummaryHeaderComponent));
                 if(ExpandedHeaderComponent) dispatch(injectBarContentExpandedHeader(ExpandedHeaderComponent));
+                if(SummaryHeaderComponent) dispatch(injectBarContentSummaryHeader(SummaryHeaderComponent));
                 if(LeftHeaderComponent) dispatch(injectBarContentLeftHeader(LeftHeaderComponent));
                 if(RightHeaderComponent) dispatch(injectBarContentRightHeader(RightHeaderComponent));
-                if(ExpandedHeaderComponent) {
-                    if(triggerScrollPosition) dispatch(triggerPosition(triggerScrollPosition));
-                } else {
-                    dispatch(triggerPosition(0));
-                }
+            }
+            componentDidMount() {
+                const {store: {dispatch}} = this.context;
+                const position = isStaticHeader ? 0 : triggerScrollPosition;
+                dispatch(triggerPosition(position));
             }
             componentWillUnmount(){
                 const {store: {dispatch}} = this.context;
@@ -37,15 +37,15 @@ export const connect = (headerOptions) => {
                 if(ExpandedHeaderComponent) dispatch(injectBarContentExpandedHeader(Empty));
                 if(LeftHeaderComponent) dispatch(injectBarContentLeftHeader(Empty));
                 if(RightHeaderComponent) dispatch(injectBarContentRightHeader(Empty));
-                if(triggerScrollPosition) dispatch(triggerPosition(Empty));
             }
             componentWillReceiveProps(newProps) {
-                const isDateUpdated = this.props.lastUpdate!== newProps.lastUpdate;
+                if(isStaticHeader) return;
+                const isDateUpdated = this.props.lastUpdate !== newProps.lastUpdate;
                 const isTriggerPositionChanged = this.props.triggerPosition !== newProps.triggerPosition;
-                const shouldTriggerProsition = isDateUpdated || isTriggerPositionChanged;
+                const header = document.querySelector('header[data-focus="header"] [data-focus="header-bar-expanded"]');
+                const shouldTriggerProsition = header !== null && (isDateUpdated || isTriggerPositionChanged);
                 if(shouldTriggerProsition) {
                     const {store: {dispatch}} = this.context;
-                    const header = document.querySelector('header[data-focus="header"] [data-focus="header-bar-expanded"]');
                     dispatch(triggerPosition(header.offsetHeight))
                 }
             }
