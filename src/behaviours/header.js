@@ -57,7 +57,7 @@ export const connect = (headerOptions) => {
                     SummaryHeaderComponent: (SummaryHeaderComponent) => dispatch(injectBarContentSummaryHeader(SummaryHeaderComponent)),
                     LeftHeaderComponent: (LeftHeaderComponent) => dispatch(injectBarContentLeftHeader(LeftHeaderComponent)),
                     RightHeaderComponent: (RightHeaderComponent) => dispatch(injectBarContentRightHeader(RightHeaderComponent)),
-                    triggerPosition: (triggerPosition) => dispatch(triggerPosition(triggerPosition))
+                    triggerPosition: (triggerScrollPosition) => dispatch(triggerPosition(triggerScrollPosition))
                 }
                 return <ComponentToConnect {...this.props} headerActions={headerActions} />
             }
